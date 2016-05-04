@@ -1,29 +1,16 @@
 class EntityCache
   module Controls
     module Record
-      def self.example
-        Volatile.example
-      end
+      def self.example(version: nil, store_version: nil)
+        id = ::Controls::ID.get
+        entity = Entity.example
+        version ||= Version.example
+        time = ::Controls::Time.reference
 
-      module NonVolatile
-        def self.example
-          id = ::Controls::ID.get
-          entity = Entity.example
-          version = Version.example
+        store_version ||= Version.example
+        store_time = time
 
-          EntityCache::Record.build id, entity, non_volatile_version: version
-        end
-      end
-
-      module Volatile
-        def self.example
-          id = ::Controls::ID.get
-          entity = Entity.example
-          version = Version.example
-          time = ::Controls::Time.reference
-
-          EntityCache::Record.build id, entity, version: version, time: time
-        end
+        EntityCache::Record.new id, entity, version, time, store_version, store_time
       end
     end
   end

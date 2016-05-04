@@ -1,9 +1,8 @@
 class EntityCache
   module Storage
-    class Volatile
+    class Cache
       attr_reader :subject
 
-      dependency :clock, Clock::UTC
       dependency :logger, Telemetry::Logger
 
       def initialize(subject)
@@ -12,20 +11,19 @@ class EntityCache
 
       def self.build(subject)
         instance = new subject
-        Clock::UTC.configure instance
         Telemetry::Logger.configure instance
         instance
       end
 
       def self.configure(receiver, subject, scope: nil, attr_name: nil)
-        attr_name ||= :volatile_storage
+        attr_name ||= :cache_store
 
         instance = Factory.(subject, scope: scope)
         receiver.public_send "#{attr_name}=", instance
         instance
       end
 
-      def get(id)
+      def get(record)
         logger.opt_trace "Getting record from volatile storage (ID: #{id.inspect})"
 
         record = get_record id
