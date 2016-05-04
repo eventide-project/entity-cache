@@ -10,9 +10,9 @@ context "Exclusive scoped volatile storage" do
   test "Entities stored in one cache are not shared with other caches" do
     other_store = EntityCache::Storage::Volatile::Scope::Exclusive.build :some_subject
 
-    cached_entity = other_store.get id
+    cached_record = other_store.get id
 
-    assert cached_entity == nil
+    assert cached_record == nil
   end
 
   test "Different entities are stored separately according to their ID" do
@@ -21,7 +21,7 @@ context "Exclusive scoped volatile storage" do
 
     store.put other_id, other_entity
 
-    assert store.get(id) == entity
-    assert store.get(other_id) == other_entity
+    assert store.get(id).entity == entity
+    assert store.get(other_id).entity == other_entity
   end
 end

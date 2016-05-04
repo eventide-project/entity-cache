@@ -3,6 +3,7 @@ module EntityCache
     class Volatile
       attr_reader :subject
 
+      dependency :clock, Clock::UTC
       dependency :logger, Telemetry::Logger
 
       def initialize(subject)
@@ -11,6 +12,7 @@ module EntityCache
 
       def self.build(subject)
         instance = new subject
+        Clock::UTC.configure instance
         Telemetry::Logger.configure instance
         instance
       end
@@ -24,14 +26,45 @@ module EntityCache
       end
 
       def get(id)
+        logger.opt_trace "Getting record from volatile storage (ID: #{id.inspect})"
+
+        record = get_record id
+
+        if record
+          logger.opt_debug "Retrieved record from volatile storage (ID: #{id.inspect}, Entity Class: #{record.entity.class.name}, Version: #{record.version}, Time: #{record.time})"
+        else
+          logger.opt_debug "Record was not found in volatile storage (ID: #{id.inspect})"
+        end
+
+        record
+      end
+
+      def get_record(id)
         records[id]
       end
 
-      def put(id, entity)
-        records[id] = entity
+      def put(id, entity, version=nil)
+        version ||= 0
+        time = clock.iso8601
+
+        logger.opt_trace "Putting record into volatile storage (ID: #{id.inspect}, Entity Class: #{entity.class.name}, Version: #{version}, Time: #{time})"
+
+        record = Record.new id, entity, version, time
+
+        put_record record
+
+        logger.opt_debug "Put record into volatile storage (ID: #{id.inspect}, Entity Class: #{entity.class.name}, Version: #{version}, Time: #{time})"
+
+        record
+      end
+
+      def put_record(record)
+        records[record.id] = record
       end
 
       abstract :records
+
+      Record = Struct.new :id, :entity, :version, :time
     end
   end
 end
