@@ -1,4 +1,4 @@
-module EntityCache
+class EntityCache
   module Storage
     module NonVolatile
       def self.included(cls)

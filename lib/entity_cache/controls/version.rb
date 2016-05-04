@@ -1,4 +1,4 @@
-module EntityCache
+class EntityCache
   module Controls
     module Version
       def self.example

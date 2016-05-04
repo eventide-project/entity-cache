@@ -1,4 +1,4 @@
-module EntityCache
+class EntityCache
   module Storage
     class Volatile
       attr_reader :subject
