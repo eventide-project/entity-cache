@@ -43,13 +43,12 @@ module EntityCache
         records[id]
       end
 
-      def put(id, entity, version=nil)
-        version ||= 0
+      def put(id, entity, version, non_volatile_version=nil)
         time = clock.iso8601
 
         logger.opt_trace "Putting record into volatile storage (ID: #{id.inspect}, Entity Class: #{entity.class.name}, Version: #{version}, Time: #{time})"
 
-        record = Record.new id, entity, version, time
+        record = Record.new id, entity, version, non_volatile_version, time
 
         put_record record
 
@@ -63,8 +62,6 @@ module EntityCache
       end
 
       abstract :records
-
-      Record = Struct.new :id, :entity, :version, :time
     end
   end
 end
