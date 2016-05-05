@@ -2,7 +2,7 @@ class EntityCache
   module Controls
     module Storage
       module Permanent
-        class ExampleClass
+        class Example
           include EntityCache::Storage::Permanent
 
           def get(id)
@@ -27,7 +27,7 @@ class EntityCache
         end
 
         def self.example
-          ExampleClass.build
+          Example.build
         end
       end
     end

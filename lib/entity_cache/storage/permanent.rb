@@ -12,6 +12,7 @@ class EntityCache
           prepend Get
           prepend Put
 
+          virtual :configure_dependencies
           abstract :get
           abstract :put
         end
@@ -50,6 +51,7 @@ class EntityCache
           instance = new
           ::Telemetry::Logger.configure instance
           ::Telemetry.configure instance
+          instance.configure_dependencies
           instance
         end
       end
@@ -59,41 +61,6 @@ class EntityCache
           sink = Telemetry.sink
           storage.telemetry.register sink
           sink
-        end
-      end
-
-      module Telemetry
-        def self.sink
-          Sink.new
-        end
-
-        Data = Struct.new :id, :entity, :version, :time
-
-        class Sink
-          include ::Telemetry::Sink
-
-          record :get
-          record :put
-
-          module Assertions
-            def retrieved?(&blk)
-              return get_records if blk.nil?
-
-              recorded_get? do |record|
-                data = record.data
-                blk.call(data.id, data.entity, data.version, data.time)
-              end
-            end
-
-            def stored?(&blk)
-              return put_records if blk.nil?
-
-              recorded_put? do |record|
-                data = record.data
-                blk.call(data.id, data.entity, data.version, data.time)
-              end
-            end
-          end
         end
       end
     end
