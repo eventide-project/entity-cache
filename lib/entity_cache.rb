@@ -1,3 +1,4 @@
+require 'configure'; Configure.activate
 require 'settings'; Settings.activate
 require 'telemetry'
 require 'telemetry/logger'

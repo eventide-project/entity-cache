@@ -1,6 +1,9 @@
 class EntityCache
   module Storage
     module Permanent
+      extend Configure::Macro
+      configure :permanent_store
+
       def self.included(cls)
         cls.class_exec do
           dependency :clock, Clock::UTC

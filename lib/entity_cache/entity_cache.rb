@@ -1,4 +1,6 @@
 class EntityCache
+  configure :entity_cache
+
   dependency :clock, Clock::UTC
   dependency :logger, Telemetry::Logger
   dependency :permanent_store, Storage::Permanent
@@ -11,9 +13,9 @@ class EntityCache
 
     Clock::UTC.configure instance
     Telemetry::Logger.configure instance
-    Storage::Temporary.configure instance
 
-    permanent_store.configure instance, subject, implementation: permanent_store
+    Storage::Temporary.configure instance, subject
+    Storage::Permanent.configure instance, subject, implementation: permanent_store
 
     instance
   end

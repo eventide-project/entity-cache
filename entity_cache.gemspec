@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.required_ruby_version = '>= 2.2.3'
 
+  s.add_runtime_dependency 'configure'
   s.add_runtime_dependency 'controls'
   s.add_runtime_dependency 'settings'
   s.add_runtime_dependency 'telemetry'
