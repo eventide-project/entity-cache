@@ -3,7 +3,7 @@ require_relative '../bench_init'
 context "Storing cache record" do
   record = EntityCache::Controls::Record.example
 
-  storage = EntityCache::Controls::Storage::Cache.example
+  storage = EntityCache::Controls::Storage::Temporary.example
 
   storage.put record
 

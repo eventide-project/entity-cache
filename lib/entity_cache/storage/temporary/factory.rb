@@ -1,6 +1,6 @@
 class EntityCache
   module Storage
-    class Cache
+    class Temporary
       module Factory
         def self.call(subject, scope: nil)
           scope ||= Scope::Defaults::Name.get

@@ -1,7 +1,7 @@
 require_relative '../bench_init'
 
 context "Retrieving an entity from volatile storage" do
-  storage = EntityCache::Controls::Storage::Cache.example
+  storage = EntityCache::Controls::Storage::Temporary.example
 
   context "Entity has not been stored previously" do
     record = storage.get 'some-id'

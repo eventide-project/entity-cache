@@ -1,8 +1,8 @@
 class EntityCache
   module Storage
-    class Cache
+    class Temporary
       module Scope
-        class Exclusive < Cache
+        class Exclusive < Temporary
           def records
             @records ||= {}
           end

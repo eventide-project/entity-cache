@@ -1,8 +1,8 @@
 class EntityCache
   module Storage
-    class Cache
+    class Temporary
       module Scope
-        class Shared < Cache
+        class Shared < Temporary
           def records
             records_registry[subject] ||= {}
           end

@@ -1,9 +1,9 @@
 class EntityCache
   module Controls
     module Storage
-      module Cache
+      module Temporary
         def self.example
-          EntityCache::Storage::Cache::Scope::Exclusive.build :some_subject
+          EntityCache::Storage::Temporary::Scope::Exclusive.build :some_subject
         end
       end
     end

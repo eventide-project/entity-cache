@@ -1,6 +1,6 @@
 class EntityCache
   module Storage
-    class Cache
+    class Temporary
       attr_reader :subject
 
       dependency :logger, Telemetry::Logger

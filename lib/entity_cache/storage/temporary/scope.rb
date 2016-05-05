@@ -1,6 +1,6 @@
 class EntityCache
   module Storage
-    class Cache
+    class Temporary
       module Scope
         Error = Class.new StandardError
 
