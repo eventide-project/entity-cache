@@ -4,6 +4,8 @@ class EntityCache
   dependency :permanent_store, Storage::Permanent
   dependency :temporary_store, Storage::Temporary
 
+  setting :write_behind_delay
+
   def self.build(permanent_store: nil)
     instance = new
 
@@ -35,11 +37,25 @@ class EntityCache
   def put(id, entity, version, permanent_version, permanent_time, time: nil)
     time ||= clock.iso8601
 
+    logger.opt_trace "Writing cache (ID: #{id}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time}, Permanent Version: #{permanent_version.inspect}, Permanent Time: #{permanent_time})"
+
     record = Record.new id, entity, version, time, permanent_version, permanent_time
 
-    temporary_store.put record
+    put_record record
+
+    logger.opt_debug "Cache written (ID: #{id}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time}, Permanent Version: #{permanent_version.inspect}, Permanent Time: #{permanent_time})"
 
     record
+  end
+
+  def put_record(record)
+    temporary_store.put record
+
+    return if write_behind_delay.nil?
+
+    if record.age >= write_behind_delay
+      permanent_store.put record.id, record.entity, record.version
+    end
   end
 
   def restore(id)

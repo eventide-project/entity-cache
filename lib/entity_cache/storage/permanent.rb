@@ -3,6 +3,7 @@ class EntityCache
     module Permanent
       def self.included(cls)
         cls.class_exec do
+          dependency :clock, Clock::UTC
           dependency :logger, ::Telemetry::Logger
           dependency :telemetry, ::Telemetry
 
@@ -49,6 +50,7 @@ class EntityCache
       module Build
         def build
           instance = new
+          Clock::UTC.configure instance
           ::Telemetry::Logger.configure instance
           ::Telemetry.configure instance
           instance.configure_dependencies

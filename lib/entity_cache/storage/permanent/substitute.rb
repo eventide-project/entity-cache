@@ -38,6 +38,10 @@ class EntityCache
             def stored?(&blk)
               sink.stored? &blk
             end
+
+            def stored_nothing?
+              sink.put_records.empty?
+            end
           end
         end
       end

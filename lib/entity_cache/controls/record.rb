@@ -6,8 +6,8 @@ class EntityCache
         entity = Entity.example
         version ||= Version.example
         time = ::Controls::Time.reference
+        permanent_version ||= Version::Permanent.example
 
-        permanent_version ||= Version.example
         permanent_time = time
 
         EntityCache::Record.new id, entity, version, time, permanent_version, permanent_time

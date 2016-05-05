@@ -1,3 +1,4 @@
+require 'settings'; Settings.activate
 require 'telemetry'
 require 'telemetry/logger'
 require 'virtual'; Virtual.activate
