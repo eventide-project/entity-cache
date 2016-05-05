@@ -1,7 +1,7 @@
 class EntityCache
-  class Record < Struct.new :id, :entity, :version, :time, :store_version, :store_time
+  class Record < Struct.new :id, :entity, :version, :time, :permanent_version, :permanent_time
     def age
-      version - store_version
+      version - permanent_version
     end
 
     def destructure(includes=nil)
