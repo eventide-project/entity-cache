@@ -6,16 +6,7 @@ class EntityCache
           substitute = Permanent.build
           sink = Permanent.register_telemetry_sink substitute
           substitute.sink = sink
-        end
-
-        module Assertions
-          def retrieved?(&blk)
-            sink.retrieved? &blk
-          end
-
-          def stored?(&blk)
-            sink.stored? &blk
-          end
+          substitute
         end
 
         class Permanent
@@ -23,10 +14,30 @@ class EntityCache
 
           include Storage::Permanent
 
-          def get(*)
+          def get(id)
+            entity, version, time = records[id]
+            return entity, version,time
           end
 
           def put(*)
+          end
+
+          def add(id, entity, version, time)
+            records[id] ||= [entity, version, time]
+          end
+
+          def records
+            @records ||= {}
+          end
+
+          module Assertions
+            def retrieved?(&blk)
+              sink.retrieved? &blk
+            end
+
+            def stored?(&blk)
+              sink.stored? &blk
+            end
           end
         end
       end
