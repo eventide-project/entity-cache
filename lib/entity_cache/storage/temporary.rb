@@ -32,6 +32,22 @@ class EntityCache
       end
 
       abstract :records
+
+      module Assertions
+        def empty?
+          records.empty?
+        end
+
+        def put?(record)
+          records[record.id] == record
+        end
+      end
+
+      module Substitute
+        def self.build
+          Scope::Exclusive.build :substitute
+        end
+      end
     end
   end
 end
