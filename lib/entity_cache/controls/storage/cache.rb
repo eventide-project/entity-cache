@@ -1,9 +1,9 @@
 class EntityCache
   module Controls
     module Storage
-      module Volatile
+      module Cache
         def self.example
-          EntityCache::Storage::Volatile::Scope::Exclusive.build :some_subject
+          EntityCache::Storage::Cache::Scope::Exclusive.build :some_subject
         end
       end
     end

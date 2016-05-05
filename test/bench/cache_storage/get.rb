@@ -1,11 +1,10 @@
-require_relative '../../bench_init'
+require_relative '../bench_init'
 
 context "Retrieving an entity from volatile storage" do
-  id = Controls::ID.get
-  storage = EntityCache::Controls::Storage::Volatile.example
+  storage = EntityCache::Controls::Storage::Cache.example
 
   context "Entity has not been stored previously" do
-    record = storage.get id
+    record = storage.get 'some-id'
 
     test "Returns nothing" do
       assert record == nil
@@ -14,9 +13,9 @@ context "Retrieving an entity from volatile storage" do
 
   context "Entity has been stored previously" do
     control_record = EntityCache::Controls::Record.example
-    storage.records[id] = control_record
+    storage.put control_record
 
-    record = storage.get id
+    record = storage.get control_record.id
 
     test "Returns the record" do
       assert record == control_record

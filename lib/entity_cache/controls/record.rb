@@ -1,8 +1,8 @@
 class EntityCache
   module Controls
     module Record
-      def self.example(version: nil, store_version: nil)
-        id = ::Controls::ID.get
+      def self.example(id=nil, version: nil, store_version: nil)
+        id ||= ::Controls::ID.get
         entity = Entity.example
         version ||= Version.example
         time = ::Controls::Time.reference

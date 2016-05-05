@@ -23,39 +23,11 @@ class EntityCache
         instance
       end
 
-      def get(record)
-        logger.opt_trace "Getting record from volatile storage (ID: #{id.inspect})"
-
-        record = get_record id
-
-        if record
-          logger.opt_debug "Retrieved record from volatile storage (ID: #{id.inspect}, Entity Class: #{record.entity.class.name}, Version: #{record.version}, Time: #{record.time})"
-        else
-          logger.opt_debug "Record was not found in volatile storage (ID: #{id.inspect})"
-        end
-
-        record
-      end
-
-      def get_record(id)
+      def get(id)
         records[id]
       end
 
-      def put(id, entity, version, non_volatile_version=nil)
-        time = clock.iso8601
-
-        logger.opt_trace "Putting record into volatile storage (ID: #{id.inspect}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Non Volatile Version: #{non_volatile_version.inspect}, Time: #{time})"
-
-        record = Record.build id, entity, version: version, time: time, non_volatile_version: non_volatile_version
-
-        put_record record
-
-        logger.opt_debug "Put record into volatile storage (ID: #{id.inspect}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Non Volatile Version: #{non_volatile_version.inspect}, Time: #{time})"
-
-        record
-      end
-
-      def put_record(record)
+      def put(record)
         records[record.id] = record
       end
 

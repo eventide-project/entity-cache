@@ -1,6 +1,6 @@
 class EntityCache
   module Storage
-    class Volatile
+    class Cache
       module Factory
         def self.call(subject, scope: nil)
           scope ||= Scope::Defaults::Name.get

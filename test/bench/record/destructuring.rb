@@ -1,7 +1,7 @@
 require_relative '../bench_init'
 
 context "Destructuring Cache Records" do
-  record = EntityCache::Controls::Record.example store_version: store_version
+  record = EntityCache::Controls::Record.example
 
   context "No attributes are specified" do
     test "Entity is returned by itself" do

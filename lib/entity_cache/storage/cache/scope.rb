@@ -1,6 +1,6 @@
 class EntityCache
   module Storage
-    class Volatile
+    class Cache
       module Scope
         Error = Class.new StandardError
 
@@ -16,7 +16,7 @@ class EntityCache
             end
 
             def self.env_var_name
-              'VOLATILE_ENTITY_CACHE_SCOPE'
+              'ENTITY_CACHE_SCOPE'
             end
 
             def self.value

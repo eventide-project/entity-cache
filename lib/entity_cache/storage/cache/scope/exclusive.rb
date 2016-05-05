@@ -1,8 +1,8 @@
 class EntityCache
   module Storage
-    class Volatile
+    class Cache
       module Scope
-        class Exclusive < Volatile
+        class Exclusive < Cache
           def records
             @records ||= {}
           end

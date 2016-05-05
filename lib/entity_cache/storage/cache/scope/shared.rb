@@ -1,8 +1,8 @@
 class EntityCache
   module Storage
-    class Volatile
+    class Cache
       module Scope
-        class Shared < Volatile
+        class Shared < Cache
           def records
             records_registry[subject] ||= {}
           end

@@ -2,7 +2,6 @@ require 'telemetry/logger'
 require 'virtual'; Virtual.activate
 
 require 'entity_cache/record'
-require 'entity_cache/storage/non_volatile'
 require 'entity_cache/storage/cache'
 require 'entity_cache/storage/cache/factory'
 require 'entity_cache/storage/cache/scope'
