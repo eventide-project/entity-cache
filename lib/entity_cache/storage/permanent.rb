@@ -19,6 +19,20 @@ class EntityCache
         end
       end
 
+      attr_reader :subject
+
+      def initialize(subject)
+        @subject = subject
+      end
+
+      def self.add(implementation_name, cls)
+        Factory.implementations[implementation_name] = cls
+      end
+
+      def self.build(subject, implementation: nil)
+        Factory.(subject, implementation: implementation)
+      end
+
       module Get
         def get(id)
           logger.opt_trace "Getting entity (ID: #{id.inspect})"
@@ -48,8 +62,8 @@ class EntityCache
       end
 
       module Build
-        def build
-          instance = new
+        def build(subject)
+          instance = new subject
           Clock::UTC.configure instance
           ::Telemetry::Logger.configure instance
           ::Telemetry.configure instance
@@ -65,6 +79,8 @@ class EntityCache
           sink
         end
       end
+
+      Error = Class.new StandardError
     end
   end
 end

@@ -16,7 +16,7 @@ context "Configuring dependencies" do
   end
 
   test do
-    instance = example_cls.build
+    instance = example_cls.build :some_subject
 
     assert instance.dependencies_configured?
   end

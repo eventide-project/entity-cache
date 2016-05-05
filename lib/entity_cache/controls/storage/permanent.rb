@@ -5,6 +5,10 @@ class EntityCache
         class Example
           include EntityCache::Storage::Permanent
 
+          def self.activate
+            EntityCache::Storage::Permanent.add :control_example, self
+          end
+
           def get(id)
             entity, version, time = records[id]
 
@@ -27,7 +31,7 @@ class EntityCache
         end
 
         def self.example
-          Example.build
+          Example.build :some_subject
         end
 
         def self.substitute

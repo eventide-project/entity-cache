@@ -3,7 +3,7 @@ class EntityCache
     module Permanent
       module Substitute
         def self.build
-          substitute = Permanent.build
+          substitute = Permanent.build :substitute
           sink = Permanent.register_telemetry_sink substitute
           substitute.sink = sink
           substitute

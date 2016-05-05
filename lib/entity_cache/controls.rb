@@ -6,3 +6,5 @@ require 'entity_cache/controls/storage/permanent'
 require 'entity_cache/controls/storage/temporary'
 require 'entity_cache/controls/version'
 require 'entity_cache/controls/write_behind_delay'
+
+EntityCache::Controls::Storage::Permanent::Example.activate

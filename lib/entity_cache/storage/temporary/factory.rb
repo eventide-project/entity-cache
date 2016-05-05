@@ -14,7 +14,11 @@ class EntityCache
           scope_class = scopes[scope_name]
 
           if scope_class.nil?
-            error_message = %{Scope "#{scope_name}" is unknown. It must be one of: #{scopes.keys * ', '})}
+            *scopes, final_scope = self.scopes.keys
+            scopes = "#{scopes * ', '} or #{scope_name}"
+
+            error_message = %{Scope "#{scope_name}" is unknown. It must be one of: #{scopes}}
+
             logger.error error_message
             raise Scope::Error, error_message
           end
