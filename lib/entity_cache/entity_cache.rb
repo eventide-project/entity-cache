@@ -6,14 +6,14 @@ class EntityCache
 
   setting :write_behind_delay
 
-  def self.build(subject)
+  def self.build(subject, permanent_store: nil)
     instance = new
 
     Clock::UTC.configure instance
     Telemetry::Logger.configure instance
     Storage::Temporary.configure instance
 
-    permanent_store.configure instance, subject
+    permanent_store.configure instance, subject, implementation: permanent_store
 
     instance
   end
