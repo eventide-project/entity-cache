@@ -22,7 +22,8 @@ class EntityCache
           def put(*)
           end
 
-          def add(id, entity, version, time)
+          def add(id, entity, version, time=nil)
+            time ||= Clock::UTC.iso8601
             records[id] ||= [entity, version, time]
           end
 
