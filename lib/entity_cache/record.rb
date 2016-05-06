@@ -25,12 +25,12 @@ class EntityCache
       responses
     end
 
-    module NoStream
-      def self.destructure(includes=nil)
-        record = Record.new
-        record.destructure includes
-      end
+    def self.missing(id)
+      instance = new id
+      instance
+    end
 
+    module NoStream
       def self.version
         :no_stream
       end

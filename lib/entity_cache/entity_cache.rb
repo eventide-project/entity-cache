@@ -25,7 +25,6 @@ class EntityCache
 
     record = get_record id
 
-    record ||= Record::NoStream
     record.destructure include
   end
 
@@ -50,6 +49,7 @@ class EntityCache
     if record
       logger.opt_debug "Cache hit (ID: #{id.inspect}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time})"
     else
+      record = Record.missing id
       logger.opt_debug "Cache miss (ID: #{id.inspect})"
     end
 
