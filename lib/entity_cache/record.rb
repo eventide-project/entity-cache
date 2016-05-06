@@ -31,6 +31,11 @@ class EntityCache
     end
 
     module NoStream
+      def self.destructure(includes=nil)
+        record = Record.missing nil
+        record.destructure includes
+      end
+
       def self.version
         :no_stream
       end
