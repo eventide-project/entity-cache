@@ -23,14 +23,7 @@ class EntityCache
   def get(id, include: nil)
     logger.opt_trace "Reading cache (ID: #{id.inspect}, Include: #{include.inspect})"
 
-    record = temporary_store.get id
-    record ||= restore id
-
-    if record
-      logger.opt_debug "Cache hit (ID: #{id.inspect}, Include: #{include.inspect}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time})"
-    else
-      logger.opt_debug "Cache miss (ID: #{id.inspect}, Include: #{include.inspect})"
-    end
+    record = get_record id
 
     record ||= Record::NoStream
     record.destructure include
@@ -46,6 +39,19 @@ class EntityCache
     put_record record
 
     logger.opt_debug "Cache written (ID: #{id}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time}, Persistent Version: #{persistent_version.inspect}, Persistent Time: #{persistent_time})"
+
+    record
+  end
+
+  def get_record(id)
+    record = temporary_store.get id
+    record ||= restore id
+
+    if record
+      logger.opt_debug "Cache hit (ID: #{id.inspect}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time})"
+    else
+      logger.opt_debug "Cache miss (ID: #{id.inspect})"
+    end
 
     record
   end
