@@ -1,3 +1,3 @@
 source ./library-symlinks.sh
 
-symlink_lib 'entity_snapshot' 'event_store'
+symlink_lib 'entity_cache'
