@@ -1,12 +1,12 @@
 require_relative '../bench_init'
 
-context "Retrieving an entity from permanent storage" do
+context "Retrieving an entity from persistent storage" do
   id = Controls::ID.get
   control_entity = EntityCache::Controls::Entity.example
   control_version = EntityCache::Controls::Version.example
   control_time = Controls::Time.reference
 
-  storage = EntityCache::Controls::Storage::Permanent.example
+  storage = EntityCache::Controls::Storage::Persistent.example
   telemetry_sink = storage.class.register_telemetry_sink storage
 
   storage.put id, control_entity, control_version, control_time

@@ -5,7 +5,7 @@ context "Temporary cache storage" do
   cache = EntityCache.new
   cache.clock.now = Controls::Time::Raw.example
 
-  cache.put record.id, record.entity, record.version, record.permanent_version, record.time
+  cache.put record.id, record.entity, record.version, record.persistent_version, record.time
 
   test "Writes to temporary storage" do
     assert cache.temporary_store do

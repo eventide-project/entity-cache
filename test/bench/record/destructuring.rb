@@ -21,11 +21,11 @@ context "Destructuring Cache Records" do
     end
 
     test "Store version" do
-      assert record.destructure(:permanent_version) == [record.entity, record.permanent_version]
+      assert record.destructure(:persistent_version) == [record.entity, record.persistent_version]
     end
 
     test "Store time" do
-      assert record.destructure(:permanent_time) == [record.entity, record.permanent_time]
+      assert record.destructure(:persistent_time) == [record.entity, record.persistent_time]
     end
 
     test "Multiple attributes" do

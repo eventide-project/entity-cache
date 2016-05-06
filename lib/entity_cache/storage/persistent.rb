@@ -1,8 +1,8 @@
 class EntityCache
   module Storage
-    module Permanent
+    module Persistent
       extend Configure::Macro
-      configure :permanent_store
+      configure :persistent_store
 
       def self.included(cls)
         cls.class_exec do

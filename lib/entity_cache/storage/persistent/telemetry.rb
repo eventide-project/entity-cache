@@ -1,6 +1,6 @@
 class EntityCache
   module Storage
-    module Permanent
+    module Persistent
       module Telemetry
         def self.sink
           Sink.new

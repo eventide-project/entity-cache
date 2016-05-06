@@ -3,7 +3,7 @@ class EntityCache
     module WriteBehindDelay
       module Exceeds
         def self.example
-          Version.example - Version::Permanent.example
+          Version.example - Version::Persistent.example
         end
 
         module NoStream

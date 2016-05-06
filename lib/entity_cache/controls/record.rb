@@ -1,16 +1,16 @@
 class EntityCache
   module Controls
     module Record
-      def self.example(id=nil, version: nil, permanent_version: nil)
+      def self.example(id=nil, version: nil, persistent_version: nil)
         id ||= ::Controls::ID.get
         entity = Entity.example
         version ||= Version.example
         time = ::Controls::Time.reference
-        permanent_version ||= Version::Permanent.example
+        persistent_version ||= Version::Persistent.example
 
-        permanent_time = time
+        persistent_time = time
 
-        EntityCache::Record.new id, entity, version, time, permanent_version, permanent_time
+        EntityCache::Record.new id, entity, version, time, persistent_version, persistent_time
       end
     end
   end

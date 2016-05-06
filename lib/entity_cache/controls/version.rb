@@ -7,7 +7,7 @@ class EntityCache
 
       module Age
         def self.example
-          Version.example - Permanent.example
+          Version.example - Persistent.example
         end
       end
 
@@ -17,7 +17,7 @@ class EntityCache
         end
       end
 
-      module Permanent
+      module Persistent
         def self.example
           1
         end

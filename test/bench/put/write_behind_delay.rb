@@ -1,6 +1,6 @@
 require_relative '../bench_init'
 
-context "Write behind delay for permanent storage" do
+context "Write behind delay for persistent storage" do
   id = Controls::ID.get
   record = EntityCache::Controls::Record.example id
 
@@ -10,8 +10,8 @@ context "Write behind delay for permanent storage" do
 
     cache.put_record record
 
-    test "Permanent storage is not updated" do
-      assert cache.permanent_store do
+    test "Persistent storage is not updated" do
+      assert cache.persistent_store do
         stored_nothing?
       end
     end
@@ -24,8 +24,8 @@ context "Write behind delay for permanent storage" do
 
       cache.put_record record
 
-      test "Permanent storage is not updated" do
-        assert cache.permanent_store do
+      test "Persistent storage is not updated" do
+        assert cache.persistent_store do
           stored_nothing?
         end
       end
@@ -38,8 +38,8 @@ context "Write behind delay for permanent storage" do
 
     cache.put_record record
 
-    test "Permanent storage is not updated" do
-      assert cache.permanent_store do
+    test "Persistent storage is not updated" do
+      assert cache.persistent_store do
         stored? do |id, entity, version|
           id == record.id && entity == record.entity && version == record.version
         end

@@ -2,7 +2,7 @@ require_relative '../bench_init'
 
 context "Configuring dependencies" do
   example_cls = Class.new do
-    include EntityCache::Storage::Permanent
+    include EntityCache::Storage::Persistent
 
     attr_accessor :dependencies_configured
 

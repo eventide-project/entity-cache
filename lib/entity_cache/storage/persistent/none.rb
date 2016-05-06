@@ -1,8 +1,8 @@
 class EntityCache
   module Storage
-    module Permanent
+    module Persistent
       class None
-        include Permanent
+        include Persistent
 
         def get(*)
         end

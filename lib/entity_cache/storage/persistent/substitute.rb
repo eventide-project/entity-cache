@@ -1,18 +1,18 @@
 class EntityCache
   module Storage
-    module Permanent
+    module Persistent
       module Substitute
         def self.build
-          substitute = Permanent.build :substitute
-          sink = Permanent.register_telemetry_sink substitute
+          substitute = Persistent.build :substitute
+          sink = Persistent.register_telemetry_sink substitute
           substitute.sink = sink
           substitute
         end
 
-        class Permanent
+        class Persistent
           attr_accessor :sink
 
-          include Storage::Permanent
+          include Storage::Persistent
 
           def get(id)
             entity, version, time = records[id]

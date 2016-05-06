@@ -1,6 +1,6 @@
 class EntityCache
   module Storage
-    module Permanent
+    module Persistent
       module Factory
         def self.call(subject, implementation: nil)
           implementation ||= Defaults.implementation

@@ -1,13 +1,13 @@
 require_relative '../bench_init'
 
-context "Record is not found in temporary storage but is found in permanent storage" do
+context "Record is not found in temporary storage but is found in persistent storage" do
   id = Controls::ID.get
   control_entity = EntityCache::Controls::Entity.example
-  control_version = EntityCache::Controls::Version::Permanent.example
+  control_version = EntityCache::Controls::Version::Persistent.example
   time = Controls::Time.reference
 
   cache = EntityCache.new
-  cache.permanent_store.add id, control_entity, control_version, time
+  cache.persistent_store.add id, control_entity, control_version, time
 
   test "Entity is returned" do
     entity = cache.get id

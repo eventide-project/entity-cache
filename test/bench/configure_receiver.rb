@@ -1,21 +1,21 @@
 require_relative './bench_init'
 
 context "Configuring a receiver" do
-  context "Permanent store is not specified" do
+  context "Persistent store is not specified" do
     receiver = OpenStruct.new
     cache = EntityCache.configure receiver, :some_subject
 
     test "Default is used" do
-      assert cache.permanent_store.is_a?(EntityCache::Storage::Permanent::None)
+      assert cache.persistent_store.is_a?(EntityCache::Storage::Persistent::None)
     end
   end
 
-  context "Permanent store is specified" do
+  context "Persistent store is specified" do
     receiver = OpenStruct.new
-    cache = EntityCache.configure receiver, :some_subject, permanent_store: :control_example
+    cache = EntityCache.configure receiver, :some_subject, persistent_store: :control_example
 
     test "Specified store is used" do
-      assert cache.permanent_store.is_a?(EntityCache::Controls::Storage::Permanent::Example)
+      assert cache.persistent_store.is_a?(EntityCache::Controls::Storage::Persistent::Example)
     end
   end
 end

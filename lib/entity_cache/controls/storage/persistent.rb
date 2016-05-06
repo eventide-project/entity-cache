@@ -1,12 +1,12 @@
 class EntityCache
   module Controls
     module Storage
-      module Permanent
+      module Persistent
         class Example
-          include EntityCache::Storage::Permanent
+          include EntityCache::Storage::Persistent
 
           def self.activate
-            EntityCache::Storage::Permanent.add :control_example, self
+            EntityCache::Storage::Persistent.add :control_example, self
           end
 
           def get(id)

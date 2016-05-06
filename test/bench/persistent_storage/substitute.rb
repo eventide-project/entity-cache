@@ -1,13 +1,13 @@
 require_relative '../bench_init'
 
-context "Permanent storage substitute" do
+context "Persistent storage substitute" do
   id = Controls::ID.get
   entity = EntityCache::Controls::Entity.example
   version = EntityCache::Controls::Version.example
   time = Controls::Time.reference
 
   context "Storing entities" do
-    substitute = EntityCache::Controls::Storage::Permanent.substitute
+    substitute = EntityCache::Controls::Storage::Persistent.substitute
 
     substitute.put id, entity, version, time
 
@@ -25,7 +25,7 @@ context "Permanent storage substitute" do
   context "Retrieving entities" do
     control_entity, control_version, control_time = entity, version, time
 
-    substitute = EntityCache::Controls::Storage::Permanent.substitute
+    substitute = EntityCache::Controls::Storage::Persistent.substitute
 
     substitute.add id, entity, version, time
 

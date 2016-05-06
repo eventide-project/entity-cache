@@ -6,12 +6,12 @@ require 'virtual'; Virtual.activate
 
 require 'entity_cache/record'
 
-require 'entity_cache/storage/permanent'
-require 'entity_cache/storage/permanent/defaults'
-require 'entity_cache/storage/permanent/factory'
-require 'entity_cache/storage/permanent/none'
-require 'entity_cache/storage/permanent/substitute'
-require 'entity_cache/storage/permanent/telemetry'
+require 'entity_cache/storage/persistent'
+require 'entity_cache/storage/persistent/defaults'
+require 'entity_cache/storage/persistent/factory'
+require 'entity_cache/storage/persistent/none'
+require 'entity_cache/storage/persistent/substitute'
+require 'entity_cache/storage/persistent/telemetry'
 
 require 'entity_cache/storage/temporary'
 require 'entity_cache/storage/temporary/factory'
