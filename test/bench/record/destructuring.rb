@@ -46,10 +46,12 @@ context "Destructuring Cache Records" do
       end
 
       context "Value is set" do
+        version = EntityCache::Controls::Version.example
+
         record.version = version
 
         test "Version number is returned" do
-          assert record.destructure(:version) == [record.entity, record.version]
+          assert record.destructure(:version) == [record.entity, version]
         end
       end
     end
