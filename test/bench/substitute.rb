@@ -27,23 +27,33 @@ context "Entity cache substitute" do
   context "Put" do
     substitute = SubstAttr::Substitute.build EntityCache
 
-    substitute.put id, control_entity, control_version, control_persisted_version, nil
-
-    test "Cannot subsequently get record" do
-      entity = substitute.get id
-
-      assert entity == nil
+    context "No record has been put in the cache substitute" do
+      test "Assertion" do
+        refute substitute do
+          put?
+        end
+      end
     end
 
-    test "Assertion" do
-      control_id = id
+    context "After a record has been put in the cache substitute" do
+      substitute.put id, control_entity, control_version, control_persisted_version, nil
 
-      assert substitute do
-        put? do |id, entity, version, persisted_version|
-          id == control_id &&
-            entity == control_entity &&
-            version == control_version &&
-            persisted_version == persisted_version
+      test "Cannot subsequently get record" do
+        entity = substitute.get id
+
+        assert entity == nil
+      end
+
+      test "Assertion" do
+        control_id = id
+
+        assert substitute do
+          put? do |id, entity, version, persisted_version|
+            id == control_id &&
+              entity == control_entity &&
+              version == control_version &&
+              persisted_version == persisted_version
+          end
         end
       end
     end
