@@ -2,29 +2,18 @@ require_relative '../bench_init'
 
 context "Record is not found in temporary storage but is found in persistent storage" do
   id = Controls::ID.get
-  control_entity = EntityCache::Controls::Entity.example
-  control_version = EntityCache::Controls::Version::Persistent.example
-  time = Controls::Time.reference
+  control_record = EntityCache::Controls::Record::Persisted.example id
 
   cache = EntityCache.new
-  cache.persistent_store.add id, control_entity, control_version, time
+  cache.persistent_store.add id, control_record.entity, control_record.version, control_record.time
 
-  test "Entity is returned" do
-    entity = cache.get id
+  test "Record is returned" do
+    record = cache.get id
 
-    assert entity == control_entity
-  end
-
-  test "Destructuring" do
-    entity, version = cache.get id, include: :version
-
-    assert entity == control_entity
-    assert version == control_version
+    assert record == control_record
   end
 
   test "Record is put into temporary storage" do
-    control_record = EntityCache::Record.new id, control_entity, control_version, time, control_version, time
-
     cache.get id
 
     assert cache.temporary_store do

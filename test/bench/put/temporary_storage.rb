@@ -1,9 +1,11 @@
 require_relative '../bench_init'
 
 context "Temporary cache storage" do
+  control_time = Controls::Time::Raw.example
+
   record = EntityCache::Controls::Record.example
   cache = EntityCache.new
-  cache.clock.now = Controls::Time::Raw.example
+  cache.clock.now = control_time
 
   cache.put record.id, record.entity, record.version, record.persisted_version, record.time
 
@@ -14,8 +16,8 @@ context "Temporary cache storage" do
   end
 
   test "Sets the time of the cache record to current time" do
-    _, time = cache.get record.id, include: :time
+    record = cache.get record.id
 
-    assert time == record.time
+    assert record.time == Clock.iso8601(control_time)
   end
 end

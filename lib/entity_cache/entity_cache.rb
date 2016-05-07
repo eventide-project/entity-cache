@@ -26,14 +26,14 @@ class EntityCache
     record = temporary_store.get id
     record ||= restore id
 
-    if record
-      logger.opt_debug "Cache hit (ID: #{id.inspect}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time})"
-    else
-      record = Record.missing id
+    if record.nil?
       logger.opt_debug "Cache miss (ID: #{id.inspect})"
+      return nil
     end
 
-    record.destructure include
+    logger.opt_debug "Cache hit (ID: #{id.inspect}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time})"
+
+    record
   end
 
   def put(id, entity, version, persistent_version, persistent_time, time: nil)

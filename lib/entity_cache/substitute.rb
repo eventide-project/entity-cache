@@ -13,10 +13,9 @@ class EntityCache
 
       def add(id, entity, version=nil, persisted_version: nil)
         version ||= 0
-
-        time = Clock::UTC.iso8601
-
         persisted_version ||= version
+
+        time = clock.iso8601
 
         record = Record.new id, entity, version, time, persisted_version, time
 
@@ -36,7 +35,7 @@ class EntityCache
           return put_records.any? if blk.nil?
 
           put_records.any? do |record|
-            blk.(record.id, record.entity, record.version, record.persisted_version)
+            blk.(record)
           end
         end
       end
