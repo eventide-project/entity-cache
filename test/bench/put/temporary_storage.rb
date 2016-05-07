@@ -7,7 +7,13 @@ context "Temporary cache storage" do
   cache = EntityCache.new
   cache.clock.now = control_time
 
-  cache.put record.id, record.entity, record.version, record.persisted_version, record.time
+  cache.put(
+    record.id,
+    record.entity,
+    record.version,
+    persisted_version: record.persisted_version,
+    persisted_time: record.time
+  )
 
   test "Writes to temporary storage" do
     assert cache.temporary_store do

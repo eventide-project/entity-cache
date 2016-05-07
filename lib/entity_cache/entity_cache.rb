@@ -36,16 +36,16 @@ class EntityCache
     record
   end
 
-  def put(id, entity, version, persistent_version, persistent_time, time: nil)
+  def put(id, entity, version, persisted_version: nil, persisted_time: nil, time: nil)
     time ||= clock.iso8601
 
-    logger.opt_trace "Writing cache (ID: #{id}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time}, Persistent Version: #{persistent_version.inspect}, Persistent Time: #{persistent_time})"
+    logger.opt_trace "Writing cache (ID: #{id}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time}, Persistent Version: #{persisted_version.inspect}, Persistent Time: #{persisted_time.inspect})"
 
-    record = Record.new id, entity, version, time, persistent_version, persistent_time
+    record = Record.new id, entity, version, time, persisted_version, persisted_time
 
     put_record record
 
-    logger.opt_debug "Cache written (ID: #{id}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time}, Persistent Version: #{persistent_version.inspect}, Persistent Time: #{persistent_time})"
+    logger.opt_debug "Cache written (ID: #{id}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time}, Persistent Version: #{persisted_version.inspect}, Persistent Time: #{persisted_time.inspect})"
 
     record
   end
@@ -61,13 +61,20 @@ class EntityCache
   end
 
   def restore(id)
-    entity, persistent_version, persistent_time = persistent_store.get id
+    entity, persisted_version, persisted_time = persistent_store.get id
 
     return nil if entity.nil?
 
-    version = persistent_version
-    time = persistent_time
+    version = persisted_version
+    time = persisted_time
 
-    put id, entity, version, persistent_version, persistent_time, time: time
+    put(
+      id,
+      entity,
+      version,
+      persisted_version: persisted_version,
+      persisted_time: persisted_time,
+      time: time
+    )
   end
 end
