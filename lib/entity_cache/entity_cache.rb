@@ -36,7 +36,7 @@ class EntityCache
     record
   end
 
-  def put(id, entity, version, persisted_version: nil, persisted_time: nil, time: nil)
+  def put(id, entity, version, persisted_version=nil, persisted_time=nil, time: nil)
     time ||= clock.iso8601
 
     logger.opt_trace "Writing cache (ID: #{id}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time}, Persistent Version: #{persisted_version.inspect}, Persistent Time: #{persisted_time.inspect})"
@@ -68,13 +68,6 @@ class EntityCache
     version = persisted_version
     time = persisted_time
 
-    put(
-      id,
-      entity,
-      version,
-      persisted_version: persisted_version,
-      persisted_time: persisted_time,
-      time: time
-    )
+    put id, entity, version, persisted_version, persisted_time, time: time
   end
 end

@@ -11,8 +11,8 @@ context "Temporary cache storage" do
     record.id,
     record.entity,
     record.version,
-    persisted_version: record.persisted_version,
-    persisted_time: record.time
+    record.persisted_version,
+    record.time
   )
 
   test "Writes to temporary storage" do
