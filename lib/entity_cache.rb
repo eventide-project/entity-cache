@@ -19,5 +19,6 @@ require 'entity_cache/storage/temporary/scope'
 require 'entity_cache/storage/temporary/scope/exclusive'
 require 'entity_cache/storage/temporary/scope/shared'
 
+require 'entity_cache/defaults'
 require 'entity_cache/entity_cache'
 require 'entity_cache/substitute'

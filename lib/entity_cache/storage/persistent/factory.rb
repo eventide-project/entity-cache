@@ -12,7 +12,7 @@ class EntityCache
         end
 
         def self.implementation_class(name)
-          implementations.fetch name do
+          implementations.fetch name.to_sym do
             *names, final_name = implementations.keys
             names = "#{names * ', '} or #{final_name}"
 

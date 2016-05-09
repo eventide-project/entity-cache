@@ -5,8 +5,7 @@ context "Write behind delay for persistent storage" do
   record = EntityCache::Controls::Record.example id
 
   context "Delay is not specified" do
-    cache = EntityCache.new
-    cache.write_behind_delay = nil
+    cache = EntityCache.new nil
 
     cache.put_record record
 
@@ -19,8 +18,8 @@ context "Write behind delay for persistent storage" do
 
   context "Delay is not exceeded" do
     test do
-      cache = EntityCache.new
-      cache.write_behind_delay = EntityCache::Controls::WriteBehindDelay::Within.example
+      write_behind_delay = EntityCache::Controls::WriteBehindDelay::Within.example
+      cache = EntityCache.new write_behind_delay
 
       cache.put_record record
 
@@ -33,8 +32,8 @@ context "Write behind delay for persistent storage" do
   end
 
   context "Delay is exceeded" do
-    cache = EntityCache.new
-    cache.write_behind_delay = EntityCache::Controls::WriteBehindDelay::Exceeds.example
+    write_behind_delay = EntityCache::Controls::WriteBehindDelay::Exceeds.example
+    cache = EntityCache.new write_behind_delay
 
     cache.put_record record
 
