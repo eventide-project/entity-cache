@@ -20,10 +20,9 @@ class EntityCache
 
     Clock::UTC.configure instance
     Telemetry::Logger.configure instance
-
     Storage::Temporary.configure instance, subject
 
-    Storage::Persistent.configure instance, subject, implementation: persistent_store
+    persistent_store.configure instance, subject
 
     instance
   end
