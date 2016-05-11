@@ -12,10 +12,11 @@ context "Configuring a receiver" do
 
   context "Persistent store is specified" do
     receiver = OpenStruct.new
-    cache = EntityCache.configure receiver, :some_subject, persistent_store: :control_example
+    store_class = EntityCache::Controls::Storage::Persistent::Example
+    cache = EntityCache.configure receiver, :some_subject, persistent_store: store_class
 
     test "Specified store is used" do
-      assert cache.persistent_store.is_a?(EntityCache::Controls::Storage::Persistent::Example)
+      assert cache.persistent_store.is_a?(store_class)
     end
   end
 end

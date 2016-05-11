@@ -5,10 +5,6 @@ class EntityCache
         class Example
           include EntityCache::Storage::Persistent
 
-          def self.activate
-            EntityCache::Storage::Persistent.add :control_example, self
-          end
-
           def get(id)
             entity, version, time = records[id]
 

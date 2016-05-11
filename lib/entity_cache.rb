@@ -7,8 +7,6 @@ require 'virtual'; Virtual.activate
 require 'entity_cache/record'
 
 require 'entity_cache/storage/persistent'
-require 'entity_cache/storage/persistent/defaults'
-require 'entity_cache/storage/persistent/factory'
 require 'entity_cache/storage/persistent/none'
 require 'entity_cache/storage/persistent/substitute'
 require 'entity_cache/storage/persistent/telemetry'

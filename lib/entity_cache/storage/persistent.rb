@@ -2,10 +2,11 @@ class EntityCache
   module Storage
     module Persistent
       extend Configure::Macro
-      configure :persistent_store
 
       def self.included(cls)
         cls.class_exec do
+          configure :persistent_store
+
           dependency :clock, Clock::UTC
           dependency :logger, ::Telemetry::Logger
           dependency :telemetry, ::Telemetry
@@ -26,14 +27,6 @@ class EntityCache
 
       def initialize(subject)
         @subject = subject
-      end
-
-      def self.add(implementation_name, cls)
-        Factory.implementations[implementation_name] = cls
-      end
-
-      def self.build(subject, implementation: nil)
-        Factory.(subject, implementation: implementation)
       end
 
       module Get
