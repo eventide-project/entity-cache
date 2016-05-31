@@ -38,8 +38,12 @@ class EntityCache
           records.empty?
         end
 
-        def put?(record)
-          records[record.id] == record
+        def put?(&block)
+          block ||= proc { true }
+
+          records.any? do |_, record|
+            block.(record)
+          end
         end
       end
 

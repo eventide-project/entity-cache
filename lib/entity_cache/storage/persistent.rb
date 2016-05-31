@@ -7,7 +7,6 @@ class EntityCache
         cls.class_exec do
           configure :persistent_store
 
-          dependency :clock, Clock::UTC
           dependency :logger, ::Telemetry::Logger
           dependency :telemetry, ::Telemetry
 
@@ -17,9 +16,9 @@ class EntityCache
           prepend Get
           prepend Put
 
-          virtual :configure_dependencies
-          abstract :get
-          abstract :put
+          virtual :configure_dependencies unless instance_methods.include?(:configure_dependencies)
+          abstract :get unless instance_methods.include?(:get)
+          abstract :put unless instance_methods.include?(:put)
         end
       end
 
@@ -44,9 +43,7 @@ class EntityCache
       end
 
       module Put
-        def put(id, entity, version, time=nil)
-          time ||= clock.iso8601
-
+        def put(id, entity, version, time)
           logger.opt_trace "Putting entity (ID: #{id.inspect}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time.inspect})"
 
           super
@@ -54,13 +51,14 @@ class EntityCache
           telemetry.record :put, Telemetry::Data.new(id, entity, version, time)
 
           logger.opt_debug "Put entity (ID: #{id.inspect}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time.inspect})"
+
+          time
         end
       end
 
       module Build
         def build(subject)
           instance = new subject
-          Clock::UTC.configure instance
           ::Telemetry::Logger.configure instance
           ::Telemetry.configure instance
           instance.configure_dependencies

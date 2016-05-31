@@ -58,13 +58,16 @@ class EntityCache
   end
 
   def put_record(record)
-    temporary_store.put record
+    if write_behind_delay && record.age >= write_behind_delay
+      persisted_time = clock.iso8601
 
-    return if write_behind_delay.nil?
+      persistent_store.put record.id, record.entity, record.version, persisted_time
 
-    if record.age >= write_behind_delay
-      persistent_store.put record.id, record.entity, record.version
+      record.persisted_version = record.version
+      record.persisted_time = persisted_time
     end
+
+    temporary_store.put record
   end
 
   def restore(id)

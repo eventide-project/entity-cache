@@ -33,14 +33,28 @@ context "Write behind delay for persistent storage" do
 
   context "Delay is exceeded" do
     write_behind_delay = EntityCache::Controls::WriteBehindDelay::Exceeds.example
+
     cache = EntityCache.new write_behind_delay
+    cache.clock.now = Controls::Time::Raw.example
 
     cache.put_record record
 
-    test "Persistent storage is not updated" do
+    test "Persistent storage is updated" do
       assert cache.persistent_store do
         stored? do |id, entity, version|
           id == record.id && entity == record.entity && version == record.version
+        end
+      end
+    end
+
+    test "Persistent version is updated in temporary record" do
+      control_time = Controls::Time.reference
+      control_version = record.version
+
+      assert cache.temporary_store do
+        put? do |record|
+          record.persisted_time == control_time &&
+            record.persisted_version == control_version
         end
       end
     end

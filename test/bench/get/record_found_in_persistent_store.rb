@@ -17,7 +17,9 @@ context "Record is not found in temporary storage but is found in persistent sto
     cache.get id
 
     assert cache.temporary_store do
-      put? control_record
+      put? do |record|
+        record == control_record
+      end
     end
   end
 end

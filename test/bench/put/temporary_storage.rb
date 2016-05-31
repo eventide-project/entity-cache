@@ -16,8 +16,12 @@ context "Temporary cache storage" do
   )
 
   test "Writes to temporary storage" do
+    control_record = record
+
     assert cache.temporary_store do
-      put? record
+      put? do |record|
+        record == control_record
+      end
     end
   end
 
