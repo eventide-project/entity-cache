@@ -27,18 +27,21 @@ class EntityCache
     instance
   end
 
-  def get(id, include: nil)
-    logger.opt_trace "Reading cache (ID: #{id.inspect}, Include: #{include.inspect})"
+  def get(id, include: nil, latest_version: nil)
+    logger.opt_trace "Reading cache (ID: #{id.inspect}, Include: #{include.inspect}, LatestVersion: #{latest_version.inspect})"
 
     record = temporary_store.get id
     record ||= restore id
 
     if record.nil?
-      logger.opt_debug "Cache miss (ID: #{id.inspect})"
+      logger.opt_debug "Cache miss (ID: #{id.inspect}, LatestVersion: #{latest_version.inspect})"
+      return nil
+    elsif latest_version && record.version > latest_version
+      logger.opt_debug "Latest version precedes record; cache miss (ID: #{id.inspect}, LatestVersion: #{latest_version.inspect}, RecordVersion: #{record.version.inspect})"
       return nil
     end
 
-    logger.opt_debug "Cache hit (ID: #{id.inspect}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time})"
+    logger.opt_debug "Cache hit (ID: #{id.inspect}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time}, LatestVersion: #{latest_version.inspect})"
 
     record
   end
