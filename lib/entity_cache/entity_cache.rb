@@ -27,8 +27,8 @@ class EntityCache
     instance
   end
 
-  def get(id, include: nil)
-    logger.opt_trace "Reading cache (ID: #{id.inspect}, Include: #{include.inspect})"
+  def get(id)
+    logger.opt_trace "Reading cache (ID: #{id.inspect})"
 
     record = temporary_store.get id
     record ||= restore id
