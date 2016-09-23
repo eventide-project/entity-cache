@@ -1,10 +1,10 @@
 require_relative '../bench_init'
 
 context "Persistent storage substitute" do
-  id = Controls::ID.get
+  id = EntityCache::Controls::ID.example
   entity = EntityCache::Controls::Entity.example
   version = EntityCache::Controls::Version.example
-  time = Controls::Time.reference
+  time = EntityCache::Controls::Time.example
 
   context "Storing entities" do
     substitute = EntityCache::Controls::Storage::Persistent.substitute

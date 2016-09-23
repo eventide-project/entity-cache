@@ -1,7 +1,7 @@
 require_relative '../bench_init'
 
 context "Temporary cache storage" do
-  control_time = Controls::Time::Raw.example
+  control_time = EntityCache::Controls::Time::Raw.example
 
   record = EntityCache::Controls::Record.example
   cache = EntityCache.new

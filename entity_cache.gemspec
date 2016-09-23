@@ -16,7 +16,8 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.2.3'
 
   s.add_runtime_dependency 'configure'
-  s.add_runtime_dependency 'controls'
+  s.add_runtime_dependency 'clock'
+  s.add_runtime_dependency 'identifier-uuid'
   s.add_runtime_dependency 'settings'
   s.add_runtime_dependency 'telemetry'
   s.add_runtime_dependency 'telemetry-logger'

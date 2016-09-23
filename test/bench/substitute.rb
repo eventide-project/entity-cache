@@ -1,7 +1,7 @@
 require_relative './bench_init'
 
 context "Entity cache substitute" do
-  id = Controls::ID.get
+  id = EntityCache::Controls::ID.example
   control_record = EntityCache::Controls::Record.example id
 
   context "Get" do

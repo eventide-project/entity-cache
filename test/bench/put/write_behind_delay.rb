@@ -1,7 +1,7 @@
 require_relative '../bench_init'
 
 context "Write behind delay for persistent storage" do
-  id = Controls::ID.get
+  id = EntityCache::Controls::ID.example
   record = EntityCache::Controls::Record.example id
 
   context "Delay is not specified" do
@@ -35,7 +35,7 @@ context "Write behind delay for persistent storage" do
     write_behind_delay = EntityCache::Controls::WriteBehindDelay::Exceeds.example
 
     cache = EntityCache.new write_behind_delay
-    cache.clock.now = Controls::Time::Raw.example
+    cache.clock.now = EntityCache::Controls::Time::Raw.example
 
     cache.put_record record
 
@@ -48,7 +48,7 @@ context "Write behind delay for persistent storage" do
     end
 
     test "Persistent version is updated in temporary record" do
-      control_time = Controls::Time.reference
+      control_time = EntityCache::Controls::Time.example
       control_version = record.version
 
       assert cache.temporary_store do
