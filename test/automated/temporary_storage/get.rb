@@ -1,4 +1,4 @@
-require_relative '../bench_init'
+require_relative '../automated_init'
 
 context "Retrieving an entity from volatile storage" do
   storage = EntityCache::Controls::Storage::Temporary.example

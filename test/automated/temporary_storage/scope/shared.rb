@@ -1,4 +1,4 @@
-require_relative '../../bench_init'
+require_relative '../../automated_init'
 
 context "Shared scoped volatile storage" do
   record = EntityCache::Controls::Record.example

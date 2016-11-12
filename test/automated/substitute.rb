@@ -1,4 +1,4 @@
-require_relative './bench_init'
+require_relative './automated_init'
 
 context "Entity cache substitute" do
   id = EntityCache::Controls::ID.example
