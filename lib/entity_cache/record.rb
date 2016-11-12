@@ -11,7 +11,7 @@ class EntityCache
       return entity if includes.nil?
 
       responses = [entity]
-      
+
       includes = Array(includes)
 
       includes.each do |attribute|
