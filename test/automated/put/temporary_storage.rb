@@ -5,9 +5,6 @@ context "Temporary cache storage" do
 
   record = EntityCache::Controls::Record.example
 
-pp record
-puts
-
   cache = EntityCache.new
   cache.clock.now = control_time
 
@@ -21,8 +18,6 @@ puts
 
   test "Writes to temporary storage" do
     control_record = record
-
-    pp cache.temporary_store.records.values.first
 
     assert cache.temporary_store do
       put? do |record|

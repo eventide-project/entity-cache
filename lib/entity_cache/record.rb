@@ -1,11 +1,12 @@
 class EntityCache
   class Record < Struct.new :id, :entity, :version, :time, :persisted_version, :persisted_time
-    def age
+    def versions_since_persisted
       persisted_version = self.persisted_version
       persisted_version ||= -1
 
       version - persisted_version.to_i
     end
+    alias :age :versions_since_persisted
 
     def destructure(includes=nil)
       return entity if includes.nil?

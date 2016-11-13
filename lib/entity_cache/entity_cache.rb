@@ -1,10 +1,7 @@
 class EntityCache
   configure :entity_cache
 
-  def write_behind_delay
-    @write_behind_delay ||= Defaults.write_behind_delay
-  end
-  attr_writer :write_behind_delay
+  attr_accessor :write_behind_delay
 
   dependency :clock, Clock::UTC
   dependency :logger, Telemetry::Logger
