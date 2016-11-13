@@ -2,7 +2,11 @@ require 'configure'; Configure.activate
 require 'settings'; Settings.activate
 require 'telemetry'
 require 'telemetry/logger'
+require 'log'
 require 'virtual'; Virtual.activate
+
+require 'entity_cache/log'
+require 'entity_cache/settings'
 
 require 'entity_cache/record'
 

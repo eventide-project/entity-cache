@@ -1,22 +1,18 @@
 class EntityCache
   configure :entity_cache
 
-  attr_reader :write_behind_delay
+  setting :write_behind_delay
 
   dependency :clock, Clock::UTC
   dependency :logger, Telemetry::Logger
   dependency :persistent_store, Storage::Persistent
   dependency :temporary_store, Storage::Temporary
 
-  def initialize(write_behind_delay=nil)
-    @write_behind_delay = write_behind_delay
-  end
-
-  def self.build(subject, persistent_store: nil, write_behind_delay: nil)
+  def self.build(subject, persistent_store: nil)
     persistent_store ||= Defaults.persistent_store
-    write_behind_delay ||= Defaults.write_behind_delay
+    write_behind_delay = Defaults.write_behind_delay
 
-    instance = new write_behind_delay
+    instance = new
 
     Clock::UTC.configure instance
     Telemetry::Logger.configure instance
