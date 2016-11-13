@@ -6,7 +6,6 @@ require 'log'
 require 'virtual'; Virtual.activate
 
 require 'entity_cache/log'
-require 'entity_cache/settings'
 
 require 'entity_cache/record'
 
