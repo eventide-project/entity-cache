@@ -54,7 +54,7 @@ class EntityCache
   end
 
   def put_record(record)
-    if write_behind_delay && record.age >= write_behind_delay
+    if write_behind_delay && record.versions_since_persisted >= write_behind_delay
       persisted_time = clock.iso8601
 
       persistent_store.put record.id, record.entity, record.version, persisted_time

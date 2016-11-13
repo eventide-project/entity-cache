@@ -6,7 +6,6 @@ class EntityCache
 
       version - persisted_version.to_i
     end
-    alias :age :versions_since_persisted
 
     def destructure(includes=nil)
       return entity if includes.nil?

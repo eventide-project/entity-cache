@@ -5,7 +5,7 @@ class EntityCache
         11
       end
 
-      module Age
+      module SincePersisted
         def self.example
           Version.example - Persistent.example
         end
