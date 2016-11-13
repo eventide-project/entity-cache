@@ -25,6 +25,10 @@ class EntityCache
       responses
     end
 
+    def age_milliseconds
+      Clock::UTC.elapsed_milliseconds(time, Clock::UTC.now)
+    end
+
     module NoStream
       def self.destructure(includes=nil)
         record = Record.new
