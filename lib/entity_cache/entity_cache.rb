@@ -60,11 +60,6 @@ class EntityCache
     if write_behind_delay && record.age >= write_behind_delay
       persisted_time = clock.iso8601
 
-      puts "put_record"
-      pp persistent_store
-      puts
-
-
       persistent_store.put record.id, record.entity, record.version, persisted_time
 
       record.persisted_version = record.version
