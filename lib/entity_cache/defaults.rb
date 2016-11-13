@@ -5,7 +5,13 @@ class EntityCache
     end
 
     def self.write_behind_delay
-      10
+      env_write_behind_delay = ENV['ENTITY_CACHE_WRITE_BEHIND_DELAY']
+
+      if env_write_behind_delay.nil?
+        return 100
+      end
+
+      env_write_behind_delay.to_i
     end
   end
 end
