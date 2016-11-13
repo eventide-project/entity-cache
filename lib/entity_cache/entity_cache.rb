@@ -1,18 +1,18 @@
 class EntityCache
   configure :entity_cache
 
-  attr_accessor :write_behind_delay
+  attr_accessor :persisted_version_divergence_limit
 
   dependency :clock, Clock::UTC
   dependency :logger, Telemetry::Logger
   dependency :persistent_store, Storage::Persistent
   dependency :temporary_store, Storage::Temporary
 
-  def self.build(subject, persistent_store: nil, write_behind_delay: nil)
+  def self.build(subject, persistent_store: nil, persisted_version_divergence_limit: nil)
     persistent_store ||= Defaults.persistent_store
 
     instance = new
-    instance.write_behind_delay = write_behind_delay
+    instance.persisted_version_divergence_limit = persisted_version_divergence_limit
 
     Clock::UTC.configure instance
     Telemetry::Logger.configure instance
@@ -54,7 +54,7 @@ class EntityCache
   end
 
   def put_record(record)
-    if write_behind_delay && record.versions_since_persisted >= write_behind_delay
+    if persisted_version_divergence_limit && record.versions_since_persisted >= persisted_version_divergence_limit
       persisted_time = clock.iso8601
 
       persistent_store.put record.id, record.entity, record.version, persisted_time
