@@ -1,10 +1,11 @@
 class EntityCache
+  include Log::Dependency
+
   configure :entity_cache
 
   attr_accessor :persisted_version_divergence_limit
 
   dependency :clock, Clock::UTC
-  dependency :logger, Telemetry::Logger
   dependency :persistent_store, Storage::Persistent
   dependency :temporary_store, Storage::Temporary
 
@@ -15,7 +16,6 @@ class EntityCache
     instance.persisted_version_divergence_limit = persisted_version_divergence_limit
 
     Clock::UTC.configure instance
-    Telemetry::Logger.configure instance
     Storage::Temporary.configure instance, subject
 
     persistent_store.configure instance, subject
@@ -24,17 +24,17 @@ class EntityCache
   end
 
   def get(id)
-    logger.opt_trace "Reading cache (ID: #{id.inspect})"
+    logger.trace { "Reading cache (ID: #{id.inspect})" }
 
     record = temporary_store.get id
     record ||= restore id
 
     if record.nil?
-      logger.opt_debug "Cache miss (ID: #{id.inspect})"
+      logger.info { "Cache miss (ID: #{id.inspect})" }
       return nil
     end
 
-    logger.opt_debug "Cache hit (ID: #{id.inspect}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time})"
+    logger.info { "Cache hit (ID: #{id.inspect}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time})" }
 
     record
   end
@@ -42,13 +42,13 @@ class EntityCache
   def put(id, entity, version, persisted_version=nil, persisted_time=nil, time: nil)
     time ||= clock.iso8601
 
-    logger.opt_trace "Writing cache (ID: #{id}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time}, Persistent Version: #{persisted_version.inspect}, Persistent Time: #{persisted_time.inspect})"
+    logger.trace { "Writing cache (ID: #{id}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time}, Persistent Version: #{persisted_version.inspect}, Persistent Time: #{persisted_time.inspect})" }
 
     record = Record.new id, entity, version, time, persisted_version, persisted_time
 
     put_record record
 
-    logger.opt_debug "Cache written (ID: #{id}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time}, Persistent Version: #{persisted_version.inspect}, Persistent Time: #{persisted_time.inspect})"
+    logger.info { "Cache written (ID: #{id}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time}, Persistent Version: #{persisted_version.inspect}, Persistent Time: #{persisted_time.inspect})" }
 
     record
   end

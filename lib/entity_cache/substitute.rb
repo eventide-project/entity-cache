@@ -5,10 +5,10 @@ class EntityCache
     end
 
     class EntityCache < EntityCache
+      include Log::Dependency
+
       def self.build
-        instance = new
-        Telemetry::Logger.configure instance
-        instance
+        new
       end
 
       def add(id, entity, version=nil, persisted_version: nil)
