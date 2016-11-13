@@ -4,6 +4,7 @@ context "Temporary cache storage" do
   control_time = EntityCache::Controls::Time::Raw.example
 
   record = EntityCache::Controls::Record.example
+
   cache = EntityCache.new
   cache.clock.now = control_time
 

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name = 'entity_cache'
-  s.version = '0.6.1.0'
+  s.version = '0.7.0.0'
   s.summary = 'Entity cache'
   s.description = ' '
 
@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'identifier-uuid'
   s.add_runtime_dependency 'settings'
   s.add_runtime_dependency 'telemetry'
-  s.add_runtime_dependency 'telemetry-logger'
+  s.add_runtime_dependency 'log'
   s.add_runtime_dependency 'virtual'
 
   s.add_development_dependency 'test_bench'

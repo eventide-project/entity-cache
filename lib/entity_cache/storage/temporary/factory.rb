@@ -34,7 +34,7 @@ class EntityCache
         end
 
         def self.logger
-          @logger ||= Telemetry::Logger.get self
+          @logger ||= Log.get(self)
         end
       end
     end

@@ -1,11 +1,11 @@
 require_relative '../automated_init'
 
-context "Write behind delay for persistent storage" do
+context "Version divergence limit for persistent storage" do
   id = EntityCache::Controls::ID.example
   record = EntityCache::Controls::Record.example id
 
   context "Delay is not specified" do
-    cache = EntityCache.new nil
+    cache = EntityCache.new
 
     cache.put_record record
 
@@ -16,10 +16,11 @@ context "Write behind delay for persistent storage" do
     end
   end
 
-  context "Delay is not exceeded" do
+  context "Limit is not exceeded" do
     test do
-      write_behind_delay = EntityCache::Controls::WriteBehindDelay::Within.example
-      cache = EntityCache.new write_behind_delay
+      persist_frequency = EntityCache::Controls::PersistFrequency::Within.example
+      cache = EntityCache.new
+      cache.persist_frequency = persist_frequency
 
       cache.put_record record
 
@@ -31,10 +32,11 @@ context "Write behind delay for persistent storage" do
     end
   end
 
-  context "Delay is exceeded" do
-    write_behind_delay = EntityCache::Controls::WriteBehindDelay::Exceeds.example
+  context "Limit is exceeded" do
+    persist_frequency = EntityCache::Controls::PersistFrequency::Exceeds.example
 
-    cache = EntityCache.new write_behind_delay
+    cache = EntityCache.new
+    cache.persist_frequency = persist_frequency
     cache.clock.now = EntityCache::Controls::Time::Raw.example
 
     cache.put_record record

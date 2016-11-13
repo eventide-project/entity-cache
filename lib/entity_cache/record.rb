@@ -1,6 +1,6 @@
 class EntityCache
   class Record < Struct.new :id, :entity, :version, :time, :persisted_version, :persisted_time
-    def age
+    def versions_since_persisted
       persisted_version = self.persisted_version
       persisted_version ||= -1
 
@@ -23,6 +23,10 @@ class EntityCache
       end
 
       responses
+    end
+
+    def age_milliseconds
+      Clock::UTC.elapsed_milliseconds(time, Clock::UTC.now)
     end
 
     module NoStream

@@ -5,9 +5,10 @@ class EntityCache
 
       def self.included(cls)
         cls.class_exec do
+          include Log::Dependency
+
           configure :persistent_store
 
-          dependency :logger, ::Telemetry::Logger
           dependency :telemetry, ::Telemetry
 
           extend Build
@@ -16,7 +17,7 @@ class EntityCache
           prepend Get
           prepend Put
 
-          virtual :configure_dependencies unless instance_methods.include?(:configure_dependencies)
+          virtual :configure unless instance_methods.include?(:configure)
           abstract :get unless instance_methods.include?(:get)
           abstract :put unless instance_methods.include?(:put)
         end
@@ -30,13 +31,13 @@ class EntityCache
 
       module Get
         def get(id)
-          logger.opt_trace "Getting entity (ID: #{id.inspect})"
+          logger.trace { "Getting entity (ID: #{id.inspect})" }
 
           entity, version, time = super
 
           telemetry.record :get, Telemetry::Data.new(id, entity, version, time)
 
-          logger.opt_debug "Got entity (ID: #{id.inspect}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time.inspect})"
+          logger.debug { "Got entity (ID: #{id.inspect}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time.inspect})" }
 
           return entity, version, time
         end
@@ -44,13 +45,13 @@ class EntityCache
 
       module Put
         def put(id, entity, version, time)
-          logger.opt_trace "Putting entity (ID: #{id.inspect}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time.inspect})"
+          logger.trace { "Putting entity (ID: #{id.inspect}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time.inspect})" }
 
           super
 
           telemetry.record :put, Telemetry::Data.new(id, entity, version, time)
 
-          logger.opt_debug "Put entity (ID: #{id.inspect}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time.inspect})"
+          logger.debug { "Put entity (ID: #{id.inspect}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time.inspect})" }
 
           time
         end
@@ -59,9 +60,8 @@ class EntityCache
       module Build
         def build(subject)
           instance = new subject
-          ::Telemetry::Logger.configure instance
           ::Telemetry.configure instance
-          instance.configure_dependencies
+          instance.configure
           instance
         end
       end

@@ -6,9 +6,9 @@ context "Cache Record" do
     record.persisted_version = EntityCache::Controls::Version::Persistent.example
 
     test "Age is the difference between the current version and the persistently stored version" do
-      control_age = EntityCache::Controls::Version::Age.example
+      control_version_difference = EntityCache::Controls::Version::SincePersisted.example
 
-      assert record.age == control_age
+      assert record.versions_since_persisted == control_version_difference
     end
   end
 
@@ -19,7 +19,7 @@ context "Cache Record" do
     test "Age is one more than the current version" do
       control_version = record.version + 1
 
-      assert record.age == control_version
+      assert record.versions_since_persisted == control_version
     end
   end
 end
