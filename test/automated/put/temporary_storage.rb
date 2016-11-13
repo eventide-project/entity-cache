@@ -22,7 +22,7 @@ puts
   test "Writes to temporary storage" do
     control_record = record
 
-    pp cache.temporary_store
+    pp cache.temporary_store.records.values.first
 
     assert cache.temporary_store do
       put? do |record|
