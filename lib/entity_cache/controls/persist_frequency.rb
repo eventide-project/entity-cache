@@ -1,6 +1,6 @@
 class EntityCache
   module Controls
-    module PersistedVersionDivergenceLimit
+    module PersistFrequency
       module Exceeds
         def self.example
           Version.example - Version::Persistent.example

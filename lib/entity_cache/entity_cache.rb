@@ -3,17 +3,17 @@ class EntityCache
 
   configure :entity_cache
 
-  attr_accessor :persisted_version_divergence_limit
+  attr_accessor :persist_frequency
 
   dependency :clock, Clock::UTC
   dependency :persistent_store, Storage::Persistent
   dependency :temporary_store, Storage::Temporary
 
-  def self.build(subject, persistent_store: nil, persisted_version_divergence_limit: nil)
+  def self.build(subject, persistent_store: nil, persist_frequency: nil)
     persistent_store ||= Defaults.persistent_store
 
     instance = new
-    instance.persisted_version_divergence_limit = persisted_version_divergence_limit
+    instance.persist_frequency = persist_frequency
 
     Clock::UTC.configure instance
     Storage::Temporary.configure instance, subject
@@ -54,7 +54,7 @@ class EntityCache
   end
 
   def put_record(record)
-    if persisted_version_divergence_limit && record.versions_since_persisted >= persisted_version_divergence_limit
+    if persist_frequency && record.versions_since_persisted >= persist_frequency
       persisted_time = clock.iso8601
 
       persistent_store.put record.id, record.entity, record.version, persisted_time

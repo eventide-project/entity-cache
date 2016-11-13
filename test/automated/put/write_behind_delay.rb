@@ -18,9 +18,9 @@ context "Version divergence limit for persistent storage" do
 
   context "Limit is not exceeded" do
     test do
-      persisted_version_divergence_limit = EntityCache::Controls::PersistedVersionDivergenceLimit::Within.example
+      persist_frequency = EntityCache::Controls::PersistFrequency::Within.example
       cache = EntityCache.new
-      cache.persisted_version_divergence_limit = persisted_version_divergence_limit
+      cache.persist_frequency = persist_frequency
 
       cache.put_record record
 
@@ -33,10 +33,10 @@ context "Version divergence limit for persistent storage" do
   end
 
   context "Limit is exceeded" do
-    persisted_version_divergence_limit = EntityCache::Controls::PersistedVersionDivergenceLimit::Exceeds.example
+    persist_frequency = EntityCache::Controls::PersistFrequency::Exceeds.example
 
     cache = EntityCache.new
-    cache.persisted_version_divergence_limit = persisted_version_divergence_limit
+    cache.persist_frequency = persist_frequency
     cache.clock.now = EntityCache::Controls::Time::Raw.example
 
     cache.put_record record
