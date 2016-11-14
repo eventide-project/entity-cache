@@ -1,9 +1,9 @@
 class EntityCache
   module Storage
     class Temporary
-      attr_reader :subject
+      include Log::Dependency
 
-      dependency :logger, Telemetry::Logger
+      attr_reader :subject
 
       def initialize(subject)
         @subject = subject
@@ -11,7 +11,6 @@ class EntityCache
 
       def self.build(subject)
         instance = new subject
-        Telemetry::Logger.configure instance
         instance
       end
 
