@@ -15,7 +15,7 @@ class EntityCache
         version ||= 0
         persisted_version ||= version
 
-        time = clock.iso8601
+        time = clock.iso8601(precision: 5)
 
         record = Record.new id, entity, version, time, persisted_version, time
 

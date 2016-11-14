@@ -29,6 +29,6 @@ context "Temporary cache storage" do
   test "Sets the time of the cache record to current time" do
     record = cache.get record.id
 
-    assert record.time == Clock.iso8601(control_time)
+    assert record.time == Clock.iso8601(control_time, precision: 5)
   end
 end
