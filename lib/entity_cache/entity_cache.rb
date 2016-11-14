@@ -40,7 +40,7 @@ class EntityCache
   end
 
   def put(id, entity, version, persisted_version=nil, persisted_time=nil, time: nil)
-    time ||= clock.iso8601
+    time ||= clock.iso8601(precision: 5)
 
     logger.trace { "Writing cache (ID: #{id}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time}, Persistent Version: #{persisted_version.inspect}, Persistent Time: #{persisted_time.inspect})" }
 
@@ -55,7 +55,7 @@ class EntityCache
 
   def put_record(record)
     if persist_frequency && record.versions_since_persisted >= persist_frequency
-      persisted_time = clock.iso8601
+      persisted_time = clock.iso8601(precision: 5)
 
       persistent_store.put record.id, record.entity, record.version, persisted_time
 
