@@ -1,7 +1,7 @@
 class EntityCache
   include Log::Dependency
 
-  configure :entity_cache
+  configure :cache
 
   attr_accessor :persist_interval
 

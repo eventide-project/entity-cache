@@ -18,7 +18,7 @@ context "Version divergence limit for persistent storage" do
 
   context "Limit is not exceeded" do
     test do
-      persist_interval = EntityCache::Controls::PersistFrequency::Within.example
+      persist_interval = EntityCache::Controls::PersistInterval::Within.example
       cache = EntityCache.new
       cache.persist_interval = persist_interval
 
@@ -33,7 +33,7 @@ context "Version divergence limit for persistent storage" do
   end
 
   context "Limit is exceeded" do
-    persist_interval = EntityCache::Controls::PersistFrequency::Exceeds.example
+    persist_interval = EntityCache::Controls::PersistInterval::Exceeds.example
 
     cache = EntityCache.new
     cache.persist_interval = persist_interval
