@@ -3,17 +3,17 @@ class EntityCache
 
   configure :entity_cache
 
-  attr_accessor :persist_frequency
+  attr_accessor :persist_interval
 
   dependency :clock, Clock::UTC
   dependency :persistent_store, Storage::Persistent
   dependency :temporary_store, Storage::Temporary
 
-  def self.build(subject, persistent_store: nil, persist_frequency: nil)
+  def self.build(subject, persistent_store: nil, persist_interval: nil)
     persistent_store ||= Defaults.persistent_store
 
     instance = new
-    instance.persist_frequency = persist_frequency
+    instance.persist_interval = persist_interval
 
     Clock::UTC.configure instance
     Storage::Temporary.configure instance, subject
@@ -54,7 +54,7 @@ class EntityCache
   end
 
   def put_record(record)
-    if persist_frequency && record.versions_since_persisted >= persist_frequency
+    if persist_interval && record.versions_since_persisted >= persist_interval
       persisted_time = clock.iso8601(precision: 5)
 
       persistent_store.put record.id, record.entity, record.version, persisted_time
