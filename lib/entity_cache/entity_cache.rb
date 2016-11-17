@@ -1,4 +1,6 @@
 class EntityCache
+  Error = Class.new(RuntimeError)
+
   include Log::Dependency
 
   configure :cache
@@ -10,6 +12,10 @@ class EntityCache
   dependency :temporary_store, Storage::Temporary
 
   def self.build(subject, persistent_store: nil, persist_interval: nil)
+    unless persistent_store.nil? == persist_interval.nil?
+      raise Error, "Must specify both the persistent store and persist interval, or neither"
+    end
+
     persistent_store ||= Defaults.persistent_store
 
     instance = new
