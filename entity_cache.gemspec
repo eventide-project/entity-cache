@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name = 'entity_cache'
-  s.version = '0.9.0.0'
+  s.version = '0.10.0.0'
   s.summary = 'Entity cache'
   s.description = ' '
 
