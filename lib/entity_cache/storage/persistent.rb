@@ -47,13 +47,13 @@ class EntityCache
         def put(id, entity, version, time)
           logger.trace { "Putting entity (ID: #{id.inspect}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time.inspect})" }
 
-          super
+          res = super
 
           telemetry.record :put, Telemetry::Data.new(id, entity, version, time)
 
           logger.debug { "Put entity (ID: #{id.inspect}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time.inspect})" }
 
-          time
+          res
         end
       end
 
