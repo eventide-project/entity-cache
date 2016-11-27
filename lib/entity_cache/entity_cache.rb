@@ -11,7 +11,7 @@ class EntityCache
   dependency :persistent_store, Storage::Persistent
   dependency :temporary_store, Storage::Temporary
 
-  def self.build(subject, persistent_store: nil, persist_interval: nil)
+  def self.build(subject, persistent_store: nil, persist_interval: nil, session: nil)
     unless persistent_store.nil? == persist_interval.nil?
       raise Error, "Must specify both the persistent store and persist interval, or neither"
     end
@@ -24,7 +24,7 @@ class EntityCache
     Clock::UTC.configure instance
     Storage::Temporary.configure instance, subject
 
-    persistent_store.configure instance, subject
+    persistent_store.configure(instance, subject, session: session)
 
     instance
   end

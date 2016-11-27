@@ -6,7 +6,7 @@ context "Configuring dependencies" do
 
     attr_accessor :dependencies_configured
 
-    def configure
+    def configure(session: nil)
       self.dependencies_configured = true
     end
 

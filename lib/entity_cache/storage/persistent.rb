@@ -1,6 +1,8 @@
 class EntityCache
   module Storage
     module Persistent
+      Error = Class.new(RuntimeError)
+
       extend Configure::Macro
 
       def self.included(cls)
@@ -58,10 +60,11 @@ class EntityCache
       end
 
       module Build
-        def build(subject)
+        def build(subject, session: session)
           instance = new subject
+
           ::Telemetry.configure instance
-          instance.configure
+          instance.configure(session: session)
           instance
         end
       end
@@ -73,8 +76,6 @@ class EntityCache
           sink
         end
       end
-
-      Error = Class.new StandardError
     end
   end
 end
