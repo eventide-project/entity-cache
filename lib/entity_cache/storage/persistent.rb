@@ -60,7 +60,7 @@ class EntityCache
       end
 
       module Build
-        def build(subject, session: session)
+        def build(subject, session: nil)
           instance = new subject
 
           ::Telemetry.configure instance
