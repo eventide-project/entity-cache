@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name = 'evt-entity_cache'
-  s.version = '0.11.1.0'
+  s.version = '0.11.1.1'
   s.summary = 'Entity cache'
   s.description = ' '
 
@@ -23,5 +23,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'evt-log'
   s.add_runtime_dependency 'evt-virtual'
 
-  s.add_development_dependency 'ntl-test_bench'
+  s.add_development_dependency 'test_bench'
 end
