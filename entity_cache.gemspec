@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
-  s.name = 'entity_cache'
-  s.version = '0.6.1.0'
+  s.name = 'evt-entity_cache'
+  s.version = '0.6.1.1'
   s.summary = 'Entity cache'
   s.description = ' '
 
@@ -15,13 +15,12 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.required_ruby_version = '>= 2.2.3'
 
-  s.add_runtime_dependency 'configure'
-  s.add_runtime_dependency 'clock'
-  s.add_runtime_dependency 'identifier-uuid'
-  s.add_runtime_dependency 'settings'
-  s.add_runtime_dependency 'telemetry'
-  s.add_runtime_dependency 'telemetry-logger'
-  s.add_runtime_dependency 'virtual'
+  s.add_runtime_dependency 'evt-configure'
+  s.add_runtime_dependency 'evt-clock'
+  s.add_runtime_dependency 'evt-identifier-uuid'
+  s.add_runtime_dependency 'evt-settings'
+  s.add_runtime_dependency 'evt-telemetry-logger'
+  s.add_runtime_dependency 'evt-virtual'
 
   s.add_development_dependency 'test_bench'
 end
