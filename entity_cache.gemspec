@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.name = 'evt-entity_cache'
   s.version = '0.11.1.1'
-  s.summary = 'Cache of entities retrieved by an entity-store, with in-memory temporary and on-disk permenent storage options'
+  s.summary = 'Cache of entities retrieved by an entity-store, with in-memory temporary and on-disk permanent storage options'
   s.description = ' '
 
   s.authors = ['The Eventide Project']
