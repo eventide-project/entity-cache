@@ -3,7 +3,7 @@ class EntityCache
     class Temporary
       module Build
         def self.call(subject, scope: nil)
-          scope ||= Scope::Defaults::Name.get
+          scope ||= Scope::Defaults.name
 
           scope_class = self.scope_class scope
 
