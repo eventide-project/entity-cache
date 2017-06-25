@@ -6,6 +6,8 @@ require 'virtual'; Virtual.activate
 
 require 'entity_cache/log'
 
+require 'entity_cache/error'
+
 require 'entity_cache/record'
 
 require 'entity_cache/storage/persistent'
