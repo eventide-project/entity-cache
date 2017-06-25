@@ -1,6 +1,7 @@
 require 'configure'; Configure.activate
 require 'settings'; Settings.activate
 require 'telemetry'
+require 'transform'
 require 'log'
 require 'virtual'; Virtual.activate
 
@@ -20,6 +21,7 @@ require 'entity_cache/storage/temporary/build'
 require 'entity_cache/storage/temporary/scope/defaults'
 require 'entity_cache/storage/temporary/scope/error'
 require 'entity_cache/storage/temporary/scope/exclusive'
+require 'entity_cache/storage/temporary/scope/global'
 require 'entity_cache/storage/temporary/scope/thread'
 
 require 'entity_cache/defaults'

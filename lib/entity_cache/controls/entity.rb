@@ -2,7 +2,7 @@ class EntityCache
   module Controls
     module Entity
       def self.example
-        Object.new
+        NoTransformer.example
       end
     end
   end

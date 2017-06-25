@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'evt-identifier-uuid'
   s.add_runtime_dependency 'evt-settings'
   s.add_runtime_dependency 'evt-telemetry'
+  s.add_runtime_dependency 'evt-transform'
   s.add_runtime_dependency 'evt-log'
   s.add_runtime_dependency 'evt-virtual'
 

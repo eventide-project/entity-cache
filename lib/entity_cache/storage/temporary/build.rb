@@ -29,7 +29,8 @@ class EntityCache
         def self.scopes
           @scopes ||= {
             :exclusive => Scope::Exclusive,
-            :thread => Scope::Thread
+            :thread => Scope::Thread,
+            :global => Scope::Global
           }
         end
 

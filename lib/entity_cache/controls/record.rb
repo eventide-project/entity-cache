@@ -1,9 +1,9 @@
 class EntityCache
   module Controls
     module Record
-      def self.example(id=nil, version: nil, persisted_version: nil)
+      def self.example(id=nil, entity: nil, version: nil, persisted_version: nil)
         id ||= ID.example
-        entity = Entity.example
+        entity ||= Entity.example
         version ||= Version.example
         persisted_version ||= Version::Persistent.example
 

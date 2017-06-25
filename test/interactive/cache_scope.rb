@@ -1,10 +1,11 @@
 require_relative './interactive_init'
 
-[:exclusive, :thread].each do |scope|
-
+[:exclusive, :thread, :global].each do |scope|
   subject = Controls::Subject.example(random: true)
 
-  record = Controls::Record.example
+  entity = Controls::Entity::Transformer.example
+
+  record = Controls::Record.example(entity: entity)
 
   cache_1 = EntityCache.build(subject, scope: scope)
   cache_2 = EntityCache.build(subject, scope: scope)
