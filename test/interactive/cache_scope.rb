@@ -6,29 +6,29 @@ require_relative './interactive_init'
 
   record = Controls::Record.example
 
-  cache1 = EntityCache.build(subject, scope: scope)
-  cache2 = EntityCache.build(subject, scope: scope)
-  cache3 = nil
+  cache_1 = EntityCache.build(subject, scope: scope)
+  cache_2 = EntityCache.build(subject, scope: scope)
+  cache_3 = EntityCache.build(subject, scope: scope)
+
+  puts "\nWriting cache record (scope is #{scope})\n\n"
+
+  cache_1.put_record(record)
+
+  puts "\nReading cache (scope is #{scope})\n\n"
+
+  record_1 = cache_1.get(record.id)
+  record_2 = cache_2.get(record.id)
+  record_3 = nil
 
   thread = Thread.new do
-    cache3 = EntityCache.build(subject, scope: scope)
+    record_3 = cache_3.get(record.id)
 
     sleep
   end
 
-  while cache3.nil? && !thread.stop?
+  while record_3.nil? && !thread.stop?
     Thread.pass
   end
-
-  puts "\nWriting cache record (scope is #{scope})\n\n"
-
-  cache1.put_record(record)
-
-  puts "\nReading cache (scope is #{scope})\n\n"
-
-  cache1.get(record.id)
-  cache2.get(record.id)
-  cache3.get(record.id)
 
   thread.kill
 
