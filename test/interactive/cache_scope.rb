@@ -1,6 +1,6 @@
 require_relative './interactive_init'
 
-[:exclusive, :shared].each do |scope|
+[:exclusive, :thread].each do |scope|
 
   subject = Controls::Subject.example(random: true)
 

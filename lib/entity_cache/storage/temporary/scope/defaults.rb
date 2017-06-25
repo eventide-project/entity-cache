@@ -22,7 +22,7 @@ class EntityCache
             end
 
             def self.value
-              'shared'
+              'thread'
             end
           end
         end

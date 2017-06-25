@@ -5,9 +5,9 @@ class EntityCache
         def self.call(subject, scope: nil)
           scope ||= Scope::Defaults.name
 
-          scope_class = self.scope_class scope
+          scope_class = scope_class(scope)
 
-          scope_class.build subject
+          scope_class.build(subject)
         end
 
         def self.scope_class(scope_name)
@@ -19,7 +19,7 @@ class EntityCache
 
             error_message = %{Scope "#{scope_name}" is unknown. It must be one of: #{scopes}}
 
-            logger.error error_message
+            logger.error(error_message)
             raise Scope::Error, error_message
           end
 
@@ -29,7 +29,7 @@ class EntityCache
         def self.scopes
           @scopes ||= {
             :exclusive => Scope::Exclusive,
-            :shared => Scope::Shared
+            :thread => Scope::Thread
           }
         end
 

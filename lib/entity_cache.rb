@@ -20,7 +20,7 @@ require 'entity_cache/storage/temporary/build'
 require 'entity_cache/storage/temporary/scope/defaults'
 require 'entity_cache/storage/temporary/scope/error'
 require 'entity_cache/storage/temporary/scope/exclusive'
-require 'entity_cache/storage/temporary/scope/shared'
+require 'entity_cache/storage/temporary/scope/thread'
 
 require 'entity_cache/defaults'
 require 'entity_cache/entity_cache'
