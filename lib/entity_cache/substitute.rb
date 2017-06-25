@@ -17,9 +17,9 @@ class EntityCache
 
         time = clock.iso8601(precision: 5)
 
-        record = Record.new id, entity, version, time, persisted_version, time
+        record = Record.new(id, entity, version, time, persisted_version, time)
 
-        temporary_store.put record
+        temporary_store.put(record)
       end
 
       def put_record(record)

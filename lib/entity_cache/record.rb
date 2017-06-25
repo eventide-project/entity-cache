@@ -1,5 +1,5 @@
 class EntityCache
-  class Record < Struct.new :id, :entity, :version, :time, :persisted_version, :persisted_time
+  class Record < Struct.new(:id, :entity, :version, :time, :persisted_version, :persisted_time)
     def versions_since_persisted
       persisted_version = self.persisted_version
       persisted_version ||= -1
@@ -17,7 +17,9 @@ class EntityCache
       includes.each do |attribute|
         value = public_send attribute
 
-        value = NoStream.version if value.nil? && attribute == :version
+        if value.nil? && attribute == :version
+          value = NoStream.version
+        end
 
         responses << value
       end
@@ -32,7 +34,7 @@ class EntityCache
     module NoStream
       def self.destructure(includes=nil)
         record = Record.new
-        record.destructure includes
+        record.destructure(includes)
       end
 
       def self.version
