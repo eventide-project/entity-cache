@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name = 'evt-entity_cache'
-  s.version = '0.11.1.4'
+  s.version = '0.12.0.0'
   s.summary = 'Cache of entities retrieved by an entity-store, with in-memory temporary and on-disk permanent storage options'
   s.description = ' '
 
