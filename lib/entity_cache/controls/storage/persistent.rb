@@ -27,11 +27,13 @@ class EntityCache
         end
 
         def self.example
-          Example.build :some_subject
+          subject = Subject.example
+
+          Example.build(subject)
         end
 
         def self.substitute
-          SubstAttr::Substitute.build Example
+          SubstAttr::Substitute.build(Example)
         end
       end
     end

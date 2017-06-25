@@ -10,14 +10,21 @@ class EntityCache
         time = Time.example
         persisted_time = time
 
-        EntityCache::Record.new id, entity, version, time, persisted_version, persisted_time
+        EntityCache::Record.new(
+          id,
+          entity,
+          version,
+          time,
+          persisted_version,
+          persisted_time
+        )
       end
 
       module Persisted
         def self.example(id=nil)
           version = Version::Persistent.example
 
-          Record.example id, version: version
+          Record.example(id, version: version)
         end
       end
     end

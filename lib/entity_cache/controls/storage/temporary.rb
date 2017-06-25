@@ -3,7 +3,9 @@ class EntityCache
     module Storage
       module Temporary
         def self.example
-          EntityCache::Storage::Temporary::Scope::Exclusive.build :some_subject
+          subject = Subject.example
+
+          EntityCache::Storage::Temporary::Scope::Exclusive.build(subject)
         end
       end
     end
