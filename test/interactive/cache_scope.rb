@@ -20,6 +20,8 @@ require_relative './interactive_init'
     Thread.pass
   end
 
+  puts "\nWriting cache record (scope is #{scope})\n\n"
+
   cache1.put_record(record)
 
   puts "\nReading cache (scope is #{scope})\n\n"

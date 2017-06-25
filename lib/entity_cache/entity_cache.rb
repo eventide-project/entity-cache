@@ -1,6 +1,4 @@
 class EntityCache
-  Error = Class.new(RuntimeError)
-
   include Log::Dependency
 
   configure :cache
@@ -48,18 +46,16 @@ class EntityCache
   def put(id, entity, version, persisted_version=nil, persisted_time=nil, time: nil)
     time ||= clock.iso8601(precision: 5)
 
-    logger.trace { "Writing cache (ID: #{id}, Entity Class: #{entity.class.name}, Version: #{version.inspect}, Time: #{time}, Persistent Version: #{persisted_version.inspect}, Persistent Time: #{persisted_time.inspect})" }
+    record = Record.new(id, entity, version, time, persisted_version, persisted_time)
 
-    record = Record.new id, entity, version, time, persisted_version, persisted_time
-
-    put_record record
-
-    logger.info { "Cache written (ID: #{id}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time}, Persistent Version: #{persisted_version.inspect}, Persistent Time: #{persisted_time.inspect})" }
+    put_record(record)
 
     record
   end
 
   def put_record(record)
+    logger.trace { "Writing cache (ID: #{record.id}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time}, Persistent Version: #{record.persisted_version.inspect}, Persistent Time: #{record.persisted_time.inspect})" }
+
     if persist_interval && record.versions_since_persisted >= persist_interval
       persisted_time = clock.iso8601(precision: 5)
 
@@ -69,17 +65,19 @@ class EntityCache
       record.persisted_time = persisted_time
     end
 
+    logger.info { "Cache written (ID: #{record.id}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time}, Persistent Version: #{record.persisted_version.inspect}, Persistent Time: #{record.persisted_time.inspect})" }
+
     temporary_store.put record
   end
 
   def restore(id)
-    entity, persisted_version, persisted_time = persistent_store.get id
+    entity, persisted_version, persisted_time = persistent_store.get(id)
 
     return nil if entity.nil?
 
     version = persisted_version
     time = persisted_time
 
-    put id, entity, version, persisted_version, persisted_time, time: time
+    put(id, entity, version, persisted_version, persisted_time, time: time)
   end
 end
