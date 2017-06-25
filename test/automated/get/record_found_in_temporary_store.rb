@@ -1,8 +1,8 @@
 require_relative '../automated_init'
 
 context "Record is found in temporary store" do
-  id = EntityCache::Controls::ID.example
-  control_record = EntityCache::Controls::Record.example id
+  id = Controls::ID.example
+  control_record = Controls::Record.example id
 
   cache = EntityCache.new
   cache.temporary_store.put control_record

@@ -1,9 +1,9 @@
 require_relative '../automated_init'
 
 context "Temporary cache storage" do
-  control_time = EntityCache::Controls::Time::Raw.example
+  control_time = Controls::Time::Raw.example
 
-  record = EntityCache::Controls::Record.example
+  record = Controls::Record.example
 
   cache = EntityCache.new
   cache.clock.now = control_time

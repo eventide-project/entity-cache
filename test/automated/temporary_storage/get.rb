@@ -1,7 +1,7 @@
 require_relative '../automated_init'
 
 context "Retrieving an entity from volatile storage" do
-  storage = EntityCache::Controls::Storage::Temporary.example
+  storage = Controls::Storage::Temporary.example
 
   context "Entity has not been stored previously" do
     record = storage.get 'some-id'
@@ -12,7 +12,7 @@ context "Retrieving an entity from volatile storage" do
   end
 
   context "Entity has been stored previously" do
-    control_record = EntityCache::Controls::Record.example
+    control_record = Controls::Record.example
     storage.put control_record
 
     record = storage.get control_record.id

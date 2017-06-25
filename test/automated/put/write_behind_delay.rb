@@ -1,8 +1,8 @@
 require_relative '../automated_init'
 
 context "Version divergence limit for persistent storage" do
-  id = EntityCache::Controls::ID.example
-  record = EntityCache::Controls::Record.example id
+  id = Controls::ID.example
+  record = Controls::Record.example id
 
   context "Delay is not specified" do
     cache = EntityCache.new
@@ -18,7 +18,7 @@ context "Version divergence limit for persistent storage" do
 
   context "Limit is not exceeded" do
     test do
-      persist_interval = EntityCache::Controls::PersistInterval::Within.example
+      persist_interval = Controls::PersistInterval::Within.example
       cache = EntityCache.new
       cache.persist_interval = persist_interval
 
@@ -33,11 +33,11 @@ context "Version divergence limit for persistent storage" do
   end
 
   context "Limit is exceeded" do
-    persist_interval = EntityCache::Controls::PersistInterval::Exceeds.example
+    persist_interval = Controls::PersistInterval::Exceeds.example
 
     cache = EntityCache.new
     cache.persist_interval = persist_interval
-    cache.clock.now = EntityCache::Controls::Time::Raw.example
+    cache.clock.now = Controls::Time::Raw.example
 
     cache.put_record record
 
@@ -50,7 +50,7 @@ context "Version divergence limit for persistent storage" do
     end
 
     test "Persistent version is updated in temporary record" do
-      control_time = EntityCache::Controls::Time.example
+      control_time = Controls::Time.example
       control_version = record.version
 
       assert cache.temporary_store do

@@ -1,7 +1,7 @@
 require_relative '../../automated_init'
 
 context "Exclusive Scoped Cache Storage" do
-  record = EntityCache::Controls::Record.example
+  record = Controls::Record.example
 
   store = EntityCache::Storage::Temporary::Scope::Exclusive.build :some_subject
 

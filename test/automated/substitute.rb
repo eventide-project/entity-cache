@@ -1,8 +1,8 @@
 require_relative './automated_init'
 
 context "Entity cache substitute" do
-  id = EntityCache::Controls::ID.example
-  control_record = EntityCache::Controls::Record.example id
+  id = Controls::ID.example
+  control_record = Controls::Record.example id
 
   context "Get" do
     substitute = SubstAttr::Substitute.build EntityCache

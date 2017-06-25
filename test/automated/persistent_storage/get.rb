@@ -1,12 +1,12 @@
 require_relative '../automated_init'
 
 context "Retrieving an entity from persistent storage" do
-  id = EntityCache::Controls::ID.example
-  control_entity = EntityCache::Controls::Entity.example
-  control_version = EntityCache::Controls::Version.example
-  control_time = EntityCache::Controls::Time.example
+  id = Controls::ID.example
+  control_entity = Controls::Entity.example
+  control_version = Controls::Version.example
+  control_time = Controls::Time.example
 
-  storage = EntityCache::Controls::Storage::Persistent.example
+  storage = Controls::Storage::Persistent.example
   telemetry_sink = storage.class.register_telemetry_sink storage
 
   storage.put id, control_entity, control_version, control_time

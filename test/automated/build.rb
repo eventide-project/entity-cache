@@ -10,7 +10,7 @@ context "Build" do
   end
 
   context "Persistent store and interval are both specified" do
-    store_class = EntityCache::Controls::Storage::Persistent::Example
+    store_class = Controls::Storage::Persistent::Example
     cache = EntityCache.build :some_subject, persistent_store: store_class, persist_interval: 1
 
     test "Specified store is used" do
@@ -23,7 +23,7 @@ context "Build" do
   end
 
   context "Persistent store is specified but interval is not" do
-    store_class = EntityCache::Controls::Storage::Persistent::Example
+    store_class = Controls::Storage::Persistent::Example
 
     test "Is an error" do
       assert proc { EntityCache.build :some_subject, persistent_store: store_class } do

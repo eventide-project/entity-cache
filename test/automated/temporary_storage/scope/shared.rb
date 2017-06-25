@@ -1,7 +1,7 @@
 require_relative '../../automated_init'
 
 context "Shared scoped volatile storage" do
-  record = EntityCache::Controls::Record.example
+  record = Controls::Record.example
 
   store = EntityCache::Storage::Temporary::Scope::Shared.build :some_subject
 

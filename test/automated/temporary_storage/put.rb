@@ -1,9 +1,9 @@
 require_relative '../automated_init'
 
 context "Storing cache record" do
-  record = EntityCache::Controls::Record.example
+  record = Controls::Record.example
 
-  storage = EntityCache::Controls::Storage::Temporary.example
+  storage = Controls::Storage::Temporary.example
 
   storage.put record
 

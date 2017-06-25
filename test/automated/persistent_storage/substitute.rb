@@ -1,13 +1,13 @@
 require_relative '../automated_init'
 
 context "Persistent storage substitute" do
-  id = EntityCache::Controls::ID.example
-  entity = EntityCache::Controls::Entity.example
-  version = EntityCache::Controls::Version.example
-  time = EntityCache::Controls::Time.example
+  id = Controls::ID.example
+  entity = Controls::Entity.example
+  version = Controls::Version.example
+  time = Controls::Time.example
 
   context "Storing entities" do
-    substitute = EntityCache::Controls::Storage::Persistent.substitute
+    substitute = Controls::Storage::Persistent.substitute
 
     substitute.put id, entity, version, time
 
@@ -25,7 +25,7 @@ context "Persistent storage substitute" do
   context "Retrieving entities" do
     control_entity, control_version, control_time = entity, version, time
 
-    substitute = EntityCache::Controls::Storage::Persistent.substitute
+    substitute = Controls::Storage::Persistent.substitute
 
     substitute.add id, entity, version, time
 

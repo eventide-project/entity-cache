@@ -1,7 +1,7 @@
 require_relative '../automated_init'
 
 context "Destructuring Cache Records" do
-  record = EntityCache::Controls::Record.example
+  record = Controls::Record.example
 
   context "No attributes are specified" do
     test "Entity is returned by itself" do
@@ -46,7 +46,7 @@ context "Destructuring Cache Records" do
       end
 
       context "Value is set" do
-        version = EntityCache::Controls::Version.example
+        version = Controls::Version.example
 
         record.version = version
 

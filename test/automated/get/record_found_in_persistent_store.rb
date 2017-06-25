@@ -1,8 +1,8 @@
 require_relative '../automated_init'
 
 context "Record is not found in temporary storage but is found in persistent storage" do
-  id = EntityCache::Controls::ID.example
-  control_record = EntityCache::Controls::Record::Persisted.example id
+  id = Controls::ID.example
+  control_record = Controls::Record::Persisted.example id
 
   cache = EntityCache.new
   cache.persistent_store.add id, control_record.entity, control_record.version, control_record.time
