@@ -10,3 +10,5 @@ require 'test_bench'; TestBench.activate
 require 'securerandom'
 
 require 'entity_cache/controls'
+
+Controls = EntityCache::Controls
