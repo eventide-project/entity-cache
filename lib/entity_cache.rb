@@ -14,7 +14,7 @@ require 'entity_cache/storage/persistent/substitute'
 require 'entity_cache/storage/persistent/telemetry'
 
 require 'entity_cache/storage/temporary'
-require 'entity_cache/storage/temporary/factory'
+require 'entity_cache/storage/temporary/build'
 require 'entity_cache/storage/temporary/scope'
 require 'entity_cache/storage/temporary/scope/exclusive'
 require 'entity_cache/storage/temporary/scope/shared'

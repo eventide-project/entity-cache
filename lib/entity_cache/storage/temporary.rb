@@ -17,7 +17,7 @@ class EntityCache
       def self.configure(receiver, subject, scope: nil, attr_name: nil)
         attr_name ||= :temporary_store
 
-        instance = Factory.(subject, scope: scope)
+        instance = Build.(subject, scope: scope)
         receiver.public_send "#{attr_name}=", instance
         instance
       end

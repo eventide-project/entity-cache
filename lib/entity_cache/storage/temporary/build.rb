@@ -1,7 +1,7 @@
 class EntityCache
   module Storage
     class Temporary
-      module Factory
+      module Build
         def self.call(subject, scope: nil)
           scope ||= Scope::Defaults::Name.get
 

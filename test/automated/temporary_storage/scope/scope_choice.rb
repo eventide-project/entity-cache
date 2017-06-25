@@ -2,19 +2,19 @@ require_relative '../../automated_init'
 
 context "Cache scope selection" do
   test "Exclusive" do
-    storage = EntityCache::Storage::Temporary::Factory.(:some_subject, scope: :exclusive)
+    storage = EntityCache::Storage::Temporary::Build.(:some_subject, scope: :exclusive)
 
     assert storage.is_a?(EntityCache::Storage::Temporary::Scope::Exclusive)
   end
 
   test "Shared" do
-    storage = EntityCache::Storage::Temporary::Factory.(:some_subject, scope: :shared)
+    storage = EntityCache::Storage::Temporary::Build.(:some_subject, scope: :shared)
 
     assert storage.is_a?(EntityCache::Storage::Temporary::Scope::Shared)
   end
 
   test "Error if unknown" do
-    assert proc { EntityCache::Storage::Temporary::Factory.(:some_subject, scope: :unknown) } do
+    assert proc { EntityCache::Storage::Temporary::Build.(:some_subject, scope: :unknown) } do
       raises_error? EntityCache::Storage::Temporary::Scope::Error
     end
   end
@@ -26,7 +26,7 @@ context "Cache scope selection" do
     test "Shared if otherwise unspecified" do
       ENV[env_var_name] = nil
 
-      storage = EntityCache::Storage::Temporary::Factory.(:some_subject)
+      storage = EntityCache::Storage::Temporary::Build.(:some_subject)
 
       assert storage.is_a?(EntityCache::Storage::Temporary::Scope::Shared)
 
@@ -36,7 +36,7 @@ context "Cache scope selection" do
     test "Can be specified with the ENTITY_CACHE_SCOPE environment variable" do
       ENV[env_var_name] = 'exclusive'
 
-      storage = EntityCache::Storage::Temporary::Factory.(:some_subject)
+      storage = EntityCache::Storage::Temporary::Build.(:some_subject)
 
       assert storage.is_a?(EntityCache::Storage::Temporary::Scope::Exclusive)
 
