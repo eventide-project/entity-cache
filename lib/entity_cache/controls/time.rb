@@ -1,12 +1,15 @@
 class EntityCache
   module Controls
-    Time = Clock::Controls::Time
-
     module Time
+      include Clock::Controls::Time
+
       def self.example(time=nil, precision: nil)
-        time ||= Raw.example
         precision ||= 5
-        ISO8601.example(time, precision: precision)
+
+        Clock::Controls::Time.example(
+          time=nil,
+          precision: precision
+        )
       end
     end
   end
