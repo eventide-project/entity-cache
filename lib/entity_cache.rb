@@ -17,7 +17,8 @@ require 'entity_cache/storage/persistent/telemetry'
 
 require 'entity_cache/storage/temporary'
 require 'entity_cache/storage/temporary/build'
-require 'entity_cache/storage/temporary/scope'
+require 'entity_cache/storage/temporary/scope/defaults'
+require 'entity_cache/storage/temporary/scope/error'
 require 'entity_cache/storage/temporary/scope/exclusive'
 require 'entity_cache/storage/temporary/scope/shared'
 

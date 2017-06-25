@@ -2,9 +2,11 @@ class EntityCache
   module Storage
     class Temporary
       module Scope
-        Error = Class.new StandardError
-
         module Defaults
+          def self.name
+            Name.get
+          end
+
           module Name
             def self.get
               value = env_var_value || self.value
