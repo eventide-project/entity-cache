@@ -11,5 +11,4 @@ require 'securerandom'
 
 require 'entity_cache/controls'
 
-fail if defined?(EntityCache::Controls); class EntityCache; module Controls; end; end
 Controls = EntityCache::Controls

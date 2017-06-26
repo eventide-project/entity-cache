@@ -16,11 +16,9 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.4'
 
   s.add_runtime_dependency 'evt-configure'
-  s.add_runtime_dependency 'evt-identifier-uuid'
+  s.add_runtime_dependency 'evt-message_store'
   s.add_runtime_dependency 'evt-settings'
   s.add_runtime_dependency 'evt-telemetry'
-  s.add_runtime_dependency 'evt-transform'
-  s.add_runtime_dependency 'evt-virtual'
 
   s.add_development_dependency 'test_bench'
 end

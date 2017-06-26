@@ -1,8 +1,9 @@
 require 'configure'
-require 'identifier/uuid'
+require 'message_store'
 require 'settings'
 require 'telemetry'
-require 'transform'
-require 'virtual'
+
+require 'entity_cache/record'
+require 'entity_cache/record/destructure'
 
 require 'entity_cache/entity_cache'
