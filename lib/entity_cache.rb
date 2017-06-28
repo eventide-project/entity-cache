@@ -9,6 +9,7 @@ require 'entity_cache/record'
 require 'entity_cache/record/destructure'
 
 require 'entity_cache/store/persistent'
+require 'entity_cache/store/persistent/null'
 require 'entity_cache/store/persistent/substitute'
 require 'entity_cache/store/persistent/telemetry'
 
