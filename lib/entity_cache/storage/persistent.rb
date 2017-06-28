@@ -23,10 +23,10 @@ class EntityCache
       end
 
       module Configure
-        def configure(**)
-          super
-
+        def configure(session: nil)
           ::Telemetry.configure(self)
+
+          super
         end
       end
 
