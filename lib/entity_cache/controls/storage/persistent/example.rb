@@ -3,7 +3,7 @@ class EntityCache
     module Storage
       module Persistent
         class Example
-          include EntityCache::Storage::Persistent
+          include EntityCache::Store::Persistent
 
           def get(id)
             path = path(id)

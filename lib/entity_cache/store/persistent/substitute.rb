@@ -1,5 +1,5 @@
 class EntityCache
-  module Storage
+  module Store
     module Persistent
       module Substitute
         def self.build
@@ -7,7 +7,7 @@ class EntityCache
         end
 
         class Persistent
-          include Storage::Persistent
+          include Store::Persistent
 
           attr_accessor :telemetry_sink
 

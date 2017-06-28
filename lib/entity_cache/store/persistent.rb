@@ -1,5 +1,5 @@
 class EntityCache
-  module Storage
+  module Store
     module Persistent
       def self.included(cls)
         cls.class_exec do

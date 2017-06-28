@@ -10,7 +10,7 @@ class EntityCache
           end
 
           class Example
-            include EntityCache::Storage::Persistent
+            include EntityCache::Store::Persistent
           end
         end
       end

@@ -6,7 +6,7 @@ context "Persistent Store" do
       id = Controls::ID.example
 
       context "Record Not Added" do
-        substitute = SubstAttr::Substitute.build(EntityCache::Storage::Persistent)
+        substitute = SubstAttr::Substitute.build(EntityCache::Store::Persistent)
 
         entity, version, time = substitute.get(id)
 
@@ -24,7 +24,7 @@ context "Persistent Store" do
       end
 
       context "Record Added" do
-        substitute = SubstAttr::Substitute.build(EntityCache::Storage::Persistent)
+        substitute = SubstAttr::Substitute.build(EntityCache::Store::Persistent)
 
         entity = Controls::Record.entity
         version = Controls::Record.persisted_version

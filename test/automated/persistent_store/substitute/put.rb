@@ -8,7 +8,7 @@ context "Persistent Store" do
       version = Controls::Record.persisted_version
       time = Controls::Record.persisted_time
 
-      substitute = SubstAttr::Substitute.build(EntityCache::Storage::Persistent)
+      substitute = SubstAttr::Substitute.build(EntityCache::Store::Persistent)
 
       substitute.put(id, entity, version, time)
 

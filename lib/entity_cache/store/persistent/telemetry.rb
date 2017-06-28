@@ -1,5 +1,5 @@
 class EntityCache
-  module Storage
+  module Store
     module Persistent
       module Telemetry
         Data = Struct.new(:id, :entity, :version, :time)
