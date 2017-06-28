@@ -3,6 +3,8 @@ class EntityCache
     module Persistent
       def self.included(cls)
         cls.class_exec do
+          include Log::Dependency
+
           extend Build
           extend RegisterTelemetrySink
 
@@ -30,9 +32,13 @@ class EntityCache
 
       module Get
         def get(id)
+          logger.trace { "Getting entity (ID: #{id.inspect})" }
+
           entity, version, time = super
 
           telemetry.record(:get, Telemetry::Data.new(id, entity, version, time))
+
+          logger.debug { "Get entity done (ID: #{id.inspect}, Entity Class: #{entity.class}, Version: #{version.inspect}, Time: #{Clock.iso8601(time)})" }
 
           return entity, version, time
         end
@@ -40,9 +46,13 @@ class EntityCache
 
       module Put
         def put(id, entity, version, time)
+          logger.trace { "Putting entity (ID: #{id.inspect}, Entity Class: #{entity.class}, Version: #{version.inspect}, Time: #{Clock.iso8601(time)})" }
+
           super
 
           telemetry.record(:put, Telemetry::Data.new(id, entity, version, time))
+
+          logger.debug { "Put entity done (ID: #{id.inspect}, Entity Class: #{entity.class}, Version: #{version.inspect}, Time: #{Clock.iso8601(time)})" }
         end
       end
 
