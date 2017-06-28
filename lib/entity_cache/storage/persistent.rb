@@ -32,6 +32,8 @@ class EntityCache
         def get(id)
           entity, version, time = super
 
+          telemetry.record(:get, Telemetry::Data.new(id, entity, version, time))
+
           return entity, version, time
         end
       end

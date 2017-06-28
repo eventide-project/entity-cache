@@ -2,7 +2,7 @@ require_relative '../../automated_init'
 
 context "Persistent Storage" do
   context "Get" do
-    context "Not Found" do
+    context "Not Found (Cache Miss)" do
       id = Controls::ID.example
 
       persistent_store = Controls::Storage::Persistent.example
@@ -14,11 +14,11 @@ context "Persistent Storage" do
       end
 
       test "Version is nil" do
-        assert(entity.nil?)
+        assert(version.nil?)
       end
 
       test "Time is nil" do
-        assert(entity.nil?)
+        assert(time.nil?)
       end
     end
   end

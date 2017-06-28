@@ -8,6 +8,7 @@ class EntityCache
           include ::Telemetry::Sink
 
           record :put
+          record :get
         end
       end
     end

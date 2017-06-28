@@ -2,7 +2,7 @@ require_relative '../../automated_init'
 
 context "Persistent Storage" do
   context "Get" do
-    context "Found" do
+    context "Found (Cache Hit)" do
       id = Controls::ID.example
 
       subject = Controls::Storage::Persistent::Write.()
