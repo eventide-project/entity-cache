@@ -1,4 +1,4 @@
-require 'configure'
+require 'configure'; Configure.activate
 require 'message_store'
 require 'settings'
 require 'telemetry'

@@ -8,6 +8,8 @@ class EntityCache
           extend Build
           extend RegisterTelemetrySink
 
+          configure :persistent_store
+
           dependency :telemetry, ::Telemetry
 
           initializer :subject
