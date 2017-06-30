@@ -18,6 +18,18 @@ class EntityCache
       end
 
       Example = Struct.new(:id, :some_attr, :other_attr)
+
+      class Example
+        module Transformer
+          def self.raw_data(instance)
+            instance.to_a
+          end
+
+          def self.instance(raw_data)
+            Example.new(*raw_data)
+          end
+        end
+      end
     end
   end
 end
