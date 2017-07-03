@@ -1,4 +1,5 @@
 class EntityCache
+  dependency :clock, Clock::UTC
   dependency :temporary_store, Store::Temporary
   dependency :persistent_store, Store::Persistent
 
@@ -8,6 +9,23 @@ class EntityCache
     if record.nil?
       record = restore(id)
     end
+
+    record
+  end
+
+  def put(id, entity, version, time: nil, persisted_version: nil, persisted_time: nil)
+    time ||= clock.now
+
+    record = Record.build(
+      id,
+      entity,
+      version,
+      time,
+      persisted_version: persisted_version,
+      persisted_time: persisted_time
+    )
+
+    temporary_store.put(record)
 
     record
   end
