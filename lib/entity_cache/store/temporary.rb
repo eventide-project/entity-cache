@@ -3,13 +3,19 @@ class EntityCache
     class Temporary
       include Log::Dependency
 
-      configure :temporary_store
-
       attr_accessor :subject
 
       def self.build(subject)
         instance = new
         instance.subject = subject
+        instance
+      end
+
+      def self.configure(receiver, subject, scope: nil, attr_name: nil)
+        attr_name ||= :temporary_store
+
+        instance = Build.(subject, scope: scope)
+        receiver.public_send("#{attr_name}=", instance)
         instance
       end
 
