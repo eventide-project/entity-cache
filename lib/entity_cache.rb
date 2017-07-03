@@ -21,5 +21,6 @@ require 'entity_cache/store/temporary/build/defaults'
 require 'entity_cache/store/temporary/scope/exclusive'
 require 'entity_cache/store/temporary/scope/global'
 require 'entity_cache/store/temporary/scope/thread'
+require 'entity_cache/store/temporary/substitute'
 
 require 'entity_cache/entity_cache'

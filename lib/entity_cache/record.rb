@@ -18,7 +18,7 @@ class EntityCache
     def self.build(id, entity, version, time, persisted_version: nil, persisted_time: nil)
       instance = new(id, entity, version, time, persisted_version, persisted_time)
       instance.configure
-      intsance
+      instance
     end
 
     def self.destructure(instance, includes=nil)
