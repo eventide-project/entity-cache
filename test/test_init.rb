@@ -11,4 +11,6 @@ require 'securerandom'
 
 require 'entity_cache/controls'
 
+require_relative './fixtures/fixtures_init'
+
 Controls = EntityCache::Controls

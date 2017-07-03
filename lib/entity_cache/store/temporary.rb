@@ -3,6 +3,8 @@ class EntityCache
     class Temporary
       include Log::Dependency
 
+      configure :temporary_store
+
       attr_accessor :subject
 
       def self.build(subject)

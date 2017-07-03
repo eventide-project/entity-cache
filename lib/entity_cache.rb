@@ -16,6 +16,8 @@ require 'entity_cache/store/persistent/substitute'
 require 'entity_cache/store/persistent/telemetry'
 
 require 'entity_cache/store/temporary'
+require 'entity_cache/store/temporary/build'
+require 'entity_cache/store/temporary/build/defaults'
 require 'entity_cache/store/temporary/scope/exclusive'
 require 'entity_cache/store/temporary/scope/global'
 require 'entity_cache/store/temporary/scope/thread'
