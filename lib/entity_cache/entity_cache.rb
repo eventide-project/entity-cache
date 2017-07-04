@@ -1,4 +1,9 @@
 class EntityCache
+  attr_writer :persist_interval
+  def persist_interval
+    @persist_interval ||= Defaults.persist_interval
+  end
+
   dependency :clock, Clock::UTC
   dependency :temporary_store, Store::Temporary
   dependency :persistent_store, Store::Persistent
@@ -15,6 +20,13 @@ class EntityCache
 
   def put(id, entity, version, time: nil, persisted_version: nil, persisted_time: nil)
     time ||= clock.now
+
+    if (version - persisted_version.to_i) >= persist_interval
+      persistent_store.put(id, entity, version, time)
+
+      persisted_version = version
+      persisted_time = time
+    end
 
     record = Record.build(
       id,
