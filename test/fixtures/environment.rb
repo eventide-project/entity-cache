@@ -1,6 +1,8 @@
 module Fixtures
   module Environment
-    def self.call(env, &block)
+    def self.call(env=nil, &block)
+      env ||= {}
+
       old_env = ENV.to_h
 
       begin

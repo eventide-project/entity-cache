@@ -10,6 +10,10 @@ class EntityCache
           cls.build(subject)
         end
 
+        def self.default_scope_class
+          scope_class(Defaults.scope)
+        end
+
         def self.scope_class(scope)
           scopes.fetch(scope) do
             *scopes, final_scope = self.scopes.keys

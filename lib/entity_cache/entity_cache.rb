@@ -1,4 +1,6 @@
 class EntityCache
+  configure :entity_cache
+
   attr_writer :persist_interval
   def persist_interval
     @persist_interval ||= Defaults.persist_interval
@@ -7,6 +9,33 @@ class EntityCache
   dependency :clock, Clock::UTC
   dependency :temporary_store, Store::Temporary
   dependency :persistent_store, Store::Persistent
+
+  def self.build(subject, scope: nil, persist_interval: nil, persistent_store: nil)
+    instance = new
+
+    instance.configure(
+      subject: subject,
+      scope: scope,
+      persist_interval: persist_interval,
+      persistent_store: persistent_store
+    )
+
+    instance
+  end
+
+  def configure(subject:, scope: nil, persist_interval: nil, persistent_store: nil)
+    unless persist_interval.nil?
+      self.persist_interval = persist_interval
+    end
+
+    Store::Temporary.configure(self, subject, scope: scope)
+
+    if persistent_store.nil?
+      Store::Persistent::Null.configure(self, subject)
+    else
+      self.persistent_store = persistent_store
+    end
+  end
 
   def get(id)
     record = temporary_store.get(id)
