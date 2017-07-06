@@ -2,9 +2,9 @@ require_relative '../automated_init'
 
 context "Put" do
   context "Persistent Store Not Updated" do
-    persist_interval = 11
-    version = 21
-    previous_persisted_version = 11
+    persist_interval = Controls::PersistInterval.example
+    version = (persist_interval * 2) - 1
+    previous_persisted_version = persist_interval
     previous_persisted_time = Controls::Record.time
 
     id = Controls::Record.id

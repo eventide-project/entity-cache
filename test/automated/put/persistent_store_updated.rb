@@ -2,8 +2,8 @@ require_relative '../automated_init'
 
 context "Put" do
   context "Persistent Store Updated" do
-    persist_interval = 11
-    version = 11
+    persist_interval = Controls::PersistInterval.example
+    version = persist_interval
     time = Controls::Record.persisted_time
 
     id = Controls::Record.id

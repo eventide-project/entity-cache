@@ -3,7 +3,7 @@ require_relative '../../automated_init'
 context "Put" do
   context "Persist Interval" do
     context "Reached" do
-      persist_interval = 11
+      persist_interval = Controls::PersistInterval.example
 
       id = Controls::Record.id
       entity = Controls::Record.entity

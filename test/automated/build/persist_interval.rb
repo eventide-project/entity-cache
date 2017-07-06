@@ -13,12 +13,14 @@ context "Build" do
     end
 
     context "Specified" do
+      persist_interval = Controls::PersistInterval.example
+
       subject = Controls::Subject.example
 
-      entity_cache = EntityCache.build(subject, persist_interval: 11)
+      entity_cache = EntityCache.build(subject, persist_interval: persist_interval)
 
       test do
-        assert(entity_cache.persist_interval == 11)
+        assert(entity_cache.persist_interval == persist_interval)
       end
     end
   end
