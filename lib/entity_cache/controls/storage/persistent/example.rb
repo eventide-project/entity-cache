@@ -5,6 +5,12 @@ class EntityCache
         class Example
           include EntityCache::Store::Persistent
 
+          attr_accessor :session
+
+          def configure(session: nil)
+            self.session = session
+          end
+
           def get(id)
             path = path(id)
 

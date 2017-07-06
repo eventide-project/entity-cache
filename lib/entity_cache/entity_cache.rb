@@ -12,31 +12,30 @@ class EntityCache
   dependency :temporary_store, Store::Temporary
   dependency :persistent_store, Store::Persistent
 
-  def self.build(subject, scope: nil, persist_interval: nil, persistent_store: nil)
+  def self.build(subject, scope: nil, persist_interval: nil, persistent_store: nil, persistent_store_session: nil)
     instance = new
 
     instance.configure(
       subject: subject,
       scope: scope,
       persist_interval: persist_interval,
-      persistent_store: persistent_store
+      persistent_store: persistent_store,
+      persistent_store_session: persistent_store_session
     )
 
     instance
   end
 
-  def configure(subject:, scope: nil, persist_interval: nil, persistent_store: nil)
+  def configure(subject:, scope: nil, persist_interval: nil, persistent_store: nil, persistent_store_session: nil)
+    persistent_store ||= Store::Persistent::Null
+
     unless persist_interval.nil?
       self.persist_interval = persist_interval
     end
 
     Store::Temporary.configure(self, subject, scope: scope)
 
-    if persistent_store.nil?
-      Store::Persistent::Null.configure(self, subject)
-    else
-      self.persistent_store = persistent_store
-    end
+    persistent_store.configure(self, subject, session: persistent_store_session)
   end
 
   def get(id)

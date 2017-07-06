@@ -1,7 +1,7 @@
 require_relative '../automated_init'
 
 context "Build" do
-  context "Persistent Store" do
+  context "Persistent Store Implementation" do
     subject = Controls::Subject.example
 
     context "Not Specified" do
@@ -17,18 +17,34 @@ context "Build" do
     end
 
     context "Specified" do
-      specified_persistent_store = Controls::Storage::Persistent.example
+      persistent_store_class = Controls::Storage::Persistent::Example
 
-      context do
+      context "Session Omitted" do
         entity_cache = EntityCache.build(
           subject,
-          persistent_store: specified_persistent_store
+          persistent_store: persistent_store_class
         )
 
         persistent_store = entity_cache.persistent_store
 
         test do
-          assert(persistent_store == specified_persistent_store)
+          assert(persistent_store.instance_of?(persistent_store_class))
+        end
+      end
+
+      context "Session Specified" do
+        session = Object.new
+
+        entity_cache = EntityCache.build(
+          subject,
+          persistent_store: persistent_store_class,
+          persistent_store_session: session
+        )
+
+        persistent_store = entity_cache.persistent_store
+
+        test "Session is set" do
+          assert(persistent_store.session == session)
         end
       end
     end
