@@ -26,3 +26,4 @@ require 'entity_cache/store/temporary/scope/thread'
 require 'entity_cache/store/temporary/substitute'
 
 require 'entity_cache/entity_cache'
+require 'entity_cache/substitute'
