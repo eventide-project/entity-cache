@@ -50,11 +50,13 @@ class EntityCache
         def put(id, entity, version, time)
           logger.trace { "Putting entity (ID: #{id.inspect}, Entity Class: #{entity.class}, Version: #{version.inspect}, Time: #{Clock.iso8601(time)})" }
 
-          super
+          return_value = super
 
           telemetry.record(:put, Telemetry::Data.new(id, entity, version, time))
 
           logger.debug { "Put entity done (ID: #{id.inspect}, Entity Class: #{entity.class}, Version: #{version.inspect}, Time: #{Clock.iso8601(time)})" }
+
+          return_value
         end
       end
 
