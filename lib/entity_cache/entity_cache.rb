@@ -36,6 +36,8 @@ class EntityCache
     Store::Temporary.configure(self, subject, scope: scope)
 
     persistent_store.configure(self, subject, session: persistent_store_session)
+
+    Clock::UTC.configure(self)
   end
 
   def get(id)
