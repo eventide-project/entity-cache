@@ -67,7 +67,7 @@ class EntityCache
 
     logger.trace { "Put entity (ID: #{id.inspect}, #{Record::LogText.get(record)}, Persist Interval: #{persist_interval.inspect})" }
 
-    if (version - persisted_version.to_i) >= persist_interval
+    if persist?(version, persisted_version)
       persistent_store.put(id, entity, version, time)
 
       persisted_version = version
@@ -110,5 +110,13 @@ class EntityCache
     logger.debug { "Restored entity (ID: #{id.inspect}, #{Record::LogText.get(record)})" }
 
     record
+  end
+
+  def persist?(version, persisted_version)
+    persisted_version ||= -1
+
+    age_versions = version - persisted_version
+
+    age_versions >= persist_interval
   end
 end

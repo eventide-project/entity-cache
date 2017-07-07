@@ -3,14 +3,14 @@ require_relative '../../automated_init'
 context "Put" do
   context "Persist Interval" do
     context "Not Reached" do
-      persist_interval = Controls::PersistInterval.example
+      persist_interval = 11
 
       id = Controls::Record.id
       entity = Controls::Record.entity
       time = Controls::Record.time
 
       context "Previous Persisted Version Not Specified" do
-        version = 10
+        version = 9
 
         entity_cache = EntityCache.new
         entity_cache.persist_interval = persist_interval
@@ -23,8 +23,8 @@ context "Put" do
       end
 
       context "Previous Persisted Version is Specified" do
-        previous_persisted_version = 1
-        version = 11
+        previous_persisted_version = 0
+        version = 10
 
         entity_cache = EntityCache.new
         entity_cache.persist_interval = persist_interval
