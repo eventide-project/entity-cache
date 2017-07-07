@@ -1,83 +1,122 @@
 class EntityCache
   include Log::Dependency
 
-  configure :cache
+  configure :entity_cache
 
-  attr_accessor :persist_interval
+  attr_writer :persist_interval
+  def persist_interval
+    @persist_interval ||= Defaults.persist_interval
+  end
 
   dependency :clock, Clock::UTC
-  dependency :persistent_store, Storage::Persistent
-  dependency :temporary_store, Storage::Temporary
+  dependency :temporary_store, Store::Temporary
+  dependency :persistent_store, Store::Persistent
 
-  def self.build(subject, scope: nil, persistent_store: nil, persist_interval: nil, session: nil)
-    unless persistent_store.nil? == persist_interval.nil?
-      raise Error, "Must specify both the persistent store and persist interval, or neither"
-    end
-
-    persistent_store ||= Defaults.persistent_store
-
+  def self.build(subject, scope: nil, persist_interval: nil, persistent_store: nil, persistent_store_session: nil)
     instance = new
-    instance.persist_interval = persist_interval
 
-    Clock::UTC.configure instance
-    Storage::Temporary.configure(instance, subject, scope: scope)
-
-    persistent_store.configure(instance, subject, session: session)
+    instance.configure(
+      subject: subject,
+      scope: scope,
+      persist_interval: persist_interval,
+      persistent_store: persistent_store,
+      persistent_store_session: persistent_store_session
+    )
 
     instance
   end
 
-  def get(id)
-    logger.trace { "Reading cache (ID: #{id.inspect})" }
+  def configure(subject:, scope: nil, persist_interval: nil, persistent_store: nil, persistent_store_session: nil)
+    persistent_store ||= Store::Persistent::Null
 
-    record = temporary_store.get id
-    record ||= restore id
+    unless persist_interval.nil?
+      self.persist_interval = persist_interval
+    end
+
+    Store::Temporary.configure(self, subject, scope: scope)
+
+    persistent_store.configure(self, subject, session: persistent_store_session)
+
+    Clock::UTC.configure(self)
+  end
+
+  def get(id)
+    logger.trace { "Get entity (ID: #{id.inspect})" }
+
+    record = temporary_store.get(id)
 
     if record.nil?
-      logger.info { "Cache miss (ID: #{id.inspect})" }
-      return nil
+      record = restore(id)
     end
 
-    logger.info { "Cache hit (ID: #{id.inspect}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time})" }
+    if record.nil?
+      logger.info { "Get entity failed; cache miss (ID: #{id.inspect}, #{Record::LogText.get(record)})" }
+    else
+      logger.info { "Get entity done (ID: #{id.inspect}, #{Record::LogText.get(record)})" }
+    end
 
     record
   end
 
-  def put(id, entity, version, persisted_version=nil, persisted_time=nil, time: nil)
-    time ||= clock.iso8601(precision: 5)
+  def put(id, entity, version, time: nil, persisted_version: nil, persisted_time: nil)
+    time ||= clock.now
 
-    record = Record.new(id, entity, version, time, persisted_version, persisted_time)
+    updated_persistent_store = false
 
-    put_record(record)
+    record = Record.build(id, entity, version, time)
 
-    record
-  end
+    logger.trace { "Put entity (ID: #{id.inspect}, #{Record::LogText.get(record)}, Persist Interval: #{persist_interval.inspect})" }
 
-  def put_record(record)
-    logger.trace { "Writing cache (ID: #{record.id}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time}, Persistent Version: #{record.persisted_version.inspect}, Persistent Time: #{record.persisted_time.inspect})" }
+    if persist?(version, persisted_version)
+      persistent_store.put(id, entity, version, time)
 
-    if persist_interval && record.versions_since_persisted >= persist_interval
-      persisted_time = clock.iso8601(precision: 5)
-
-      persistent_store.put record.id, record.entity, record.version, persisted_time
-
-      record.persisted_version = record.version
-      record.persisted_time = persisted_time
+      persisted_version = version
+      persisted_time = time
+      updated_persistent_store = true
     end
 
-    logger.info { "Cache written (ID: #{record.id}, Entity Class: #{record.entity.class.name}, Version: #{record.version.inspect}, Time: #{record.time}, Persistent Version: #{record.persisted_version.inspect}, Persistent Time: #{record.persisted_time.inspect})" }
+    record.persisted_version = persisted_version
+    record.persisted_time = persisted_time
 
-    temporary_store.put record
+    temporary_store.put(record)
+
+    logger.info { "Put entity done (ID: #{id.inspect}, #{Record::LogText.get(record)}, Persist Interval: #{persist_interval.inspect}, Updated Persistent Store: #{updated_persistent_store})" }
+
+    record
   end
 
   def restore(id)
-    entity, persisted_version, persisted_time = persistent_store.get(id)
+    logger.trace { "Restoring entity (ID: #{id.inspect})" }
 
-    return nil if entity.nil?
+    entity, version, time = persistent_store.get(id)
 
-    version = persisted_version
-    time = persisted_time
+    if entity.nil?
+      logger.debug { "Could not restore entity (ID: #{id.inspect})" }
 
-    put(id, entity, version, persisted_version, persisted_time, time: time)
+      return nil
+    end
+
+    record = Record.build(
+      id,
+      entity,
+      version,
+      time,
+      persisted_version: version,
+      persisted_time: time
+    )
+
+    temporary_store.put(record)
+
+    logger.debug { "Restored entity (ID: #{id.inspect}, #{Record::LogText.get(record)})" }
+
+    record
+  end
+
+  def persist?(version, persisted_version)
+    persisted_version ||= -1
+
+    age_versions = version - persisted_version
+
+    age_versions >= persist_interval
   end
 end

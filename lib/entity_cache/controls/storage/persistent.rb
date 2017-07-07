@@ -2,38 +2,20 @@ class EntityCache
   module Controls
     module Storage
       module Persistent
-        class Example
-          include EntityCache::Storage::Persistent
-
-          def get(id)
-            entity, version, time = records[id]
-
-            return entity, version, time
-          end
-
-          def put(id, entity, version, time)
-            records[id] = [entity, version, time]
-          end
-
-          def records
-            @records ||= {}
-          end
-
-          module Assertions
-            def stored?(id, entity, version, time)
-              records[id] == [entity, version, time]
-            end
-          end
-        end
-
-        def self.example
-          subject = Subject.example
+        def self.example(subject=nil)
+          subject ||= Subject.example
 
           Example.build(subject)
         end
 
-        def self.substitute
-          SubstAttr::Substitute.build(Example)
+        def self.path(subject, id=nil)
+          id ||= ID.example
+
+          File.join(tmpdir, "#{subject}-#{id}.yaml")
+        end
+
+        def self.tmpdir
+          @tmpdir ||= Dir.tmpdir
         end
       end
     end

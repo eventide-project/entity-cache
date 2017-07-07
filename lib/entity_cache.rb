@@ -1,27 +1,29 @@
 require 'configure'; Configure.activate
-require 'settings'; Settings.activate
+require 'message_store'
+require 'settings'
 require 'telemetry'
-require 'log'
-require 'virtual'; Virtual.activate
 
 require 'entity_cache/log'
 
-require 'entity_cache/error'
+require 'entity_cache/defaults'
 
 require 'entity_cache/record'
+require 'entity_cache/record/destructure'
+require 'entity_cache/record/log_text'
+require 'entity_cache/record/transformer'
 
-require 'entity_cache/storage/persistent'
-require 'entity_cache/storage/persistent/none'
-require 'entity_cache/storage/persistent/substitute'
-require 'entity_cache/storage/persistent/telemetry'
+require 'entity_cache/store/persistent'
+require 'entity_cache/store/persistent/null'
+require 'entity_cache/store/persistent/substitute'
+require 'entity_cache/store/persistent/telemetry'
 
-require 'entity_cache/storage/temporary'
-require 'entity_cache/storage/temporary/build'
-require 'entity_cache/storage/temporary/scope/defaults'
-require 'entity_cache/storage/temporary/scope/error'
-require 'entity_cache/storage/temporary/scope/exclusive'
-require 'entity_cache/storage/temporary/scope/shared'
+require 'entity_cache/store/temporary'
+require 'entity_cache/store/temporary/build'
+require 'entity_cache/store/temporary/build/defaults'
+require 'entity_cache/store/temporary/scope/exclusive'
+require 'entity_cache/store/temporary/scope/global'
+require 'entity_cache/store/temporary/scope/thread'
+require 'entity_cache/store/temporary/substitute'
 
-require 'entity_cache/defaults'
 require 'entity_cache/entity_cache'
 require 'entity_cache/substitute'

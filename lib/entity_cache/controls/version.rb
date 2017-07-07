@@ -2,24 +2,18 @@ class EntityCache
   module Controls
     module Version
       def self.example
-        11
+        Current.example
       end
 
-      module SincePersisted
+      module Current
         def self.example
-          Version.example - Persistent.example
+          11
         end
       end
 
-      module NoStream
+      module Previous
         def self.example
-          EntityCache::Record::NoStream.version
-        end
-      end
-
-      module Persistent
-        def self.example
-          1
+          Current.example - 1
         end
       end
     end

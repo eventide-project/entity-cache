@@ -1,10 +1,8 @@
 class EntityCache
   module Controls
     module Subject
-      def self.example(random: nil)
-        random = true if random.nil?
-
-        "TestSubject#{SecureRandom.hex(7) if random}"
+      def self.example
+        "some-subject-#{SecureRandom.hex(7)}"
       end
     end
   end

@@ -1,45 +1,60 @@
 require_relative './automated_init'
 
-context "Entity cache substitute" do
+context "Substitute" do
   id = Controls::ID.example
-  control_record = Controls::Record.example id
+
+  control_record = Controls::Record.example(id: id)
 
   context "Get" do
-    substitute = SubstAttr::Substitute.build EntityCache
-    substitute.clock.now = Time.parse control_record.time
-    substitute.add id, control_record.entity, control_record.version, persisted_version: control_record.persisted_version
+    substitute = SubstAttr::Substitute.build(EntityCache)
 
-    test "Record is returned" do
-      record = substitute.get id
+    substitute.add(
+      id,
+      control_record.entity,
+      control_record.version,
+      time: control_record.time,
+      persisted_version: control_record.persisted_version,
+      persisted_time: control_record.persisted_time
+    )
 
-      assert record == control_record
+    test "Returns added record" do
+      record = substitute.get(id)
+
+      assert(record == control_record)
     end
   end
 
   context "Put" do
-    substitute = SubstAttr::Substitute.build EntityCache
+    substitute = SubstAttr::Substitute.build(EntityCache)
 
-    context "No record has been put in the cache substitute" do
-      test "Assertion" do
-        refute substitute do
+    context "Nothing Is Put" do
+      test "Predicate returns false" do
+        refute(substitute) do
           put?
         end
       end
     end
 
-    context "After a record has been put in the cache substitute" do
-      substitute.put_record control_record
+    context "Record Is Put" do
+      substitute.put(
+        id,
+        control_record.entity,
+        control_record.version,
+        time: control_record.time,
+        persisted_version: control_record.persisted_version,
+        persisted_time: control_record.persisted_time
+      )
 
-      test "Cannot subsequently get record" do
-        record = substitute.get id
+      test "Get returns nothing" do
+        record = substitute.get(id)
 
-        assert record == nil
+        assert(record.nil?)
       end
 
-      test "Assertion" do
-        control_id = id
+      test "Predicate returns true" do
+        assert(substitute.put?)
 
-        assert substitute do
+        assert(substitute) do
           put? do |record|
             record == control_record
           end

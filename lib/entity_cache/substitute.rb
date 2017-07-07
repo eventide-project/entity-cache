@@ -5,39 +5,55 @@ class EntityCache
     end
 
     class EntityCache < EntityCache
-      include Log::Dependency
-
       def self.build
         new
       end
 
-      def add(id, entity, version=nil, persisted_version: nil)
+      def add(id, entity, version=nil, time: nil, persisted_version: nil, persisted_time: nil)
         version ||= 0
         persisted_version ||= version
+        time ||= clock.now
+        persisted_time ||= time
 
-        time = clock.iso8601(precision: 5)
-
-        record = Record.new(id, entity, version, time, persisted_version, time)
+        record = Record.build(
+          id,
+          entity,
+          version,
+          time,
+          persisted_version: persisted_version,
+          persisted_time: persisted_time
+        )
 
         temporary_store.put(record)
       end
 
-      def put_record(record)
+      def put(id, entity, version, time: nil, persisted_version: nil, persisted_time: nil)
+        time ||= clock.now
+
+        record = Record.build(
+          id,
+          entity,
+          version,
+          time,
+          persisted_version: persisted_version,
+          persisted_time: persisted_time
+        )
+
         put_records << record
+
+        record
+      end
+
+      def put?(&blk)
+        return put_records.any? if blk.nil?
+
+        put_records.any? do |record|
+          blk.(record)
+        end
       end
 
       def put_records
         @put_records ||= []
-      end
-
-      module Assertions
-        def put?(&blk)
-          return put_records.any? if blk.nil?
-
-          put_records.any? do |record|
-            blk.(record)
-          end
-        end
       end
     end
   end

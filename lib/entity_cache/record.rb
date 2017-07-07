@@ -1,44 +1,50 @@
 class EntityCache
-  class Record < Struct.new(:id, :entity, :version, :time, :persisted_version, :persisted_time)
-    def versions_since_persisted
-      persisted_version = self.persisted_version
-      persisted_version ||= -1
+  Record = Struct.new(
+    :id,
+    :entity,
+    :version,
+    :time,
+    :persisted_version,
+    :persisted_time
+  )
 
-      version - persisted_version.to_i
+  class Record
+    dependency :clock, Clock::UTC
+
+    def configure
+      Clock::UTC.configure(self)
     end
 
-    def destructure(includes=nil)
-      return entity if includes.nil?
+    def self.build(id, entity, version, time, persisted_version: nil, persisted_time: nil)
+      instance = new(id, entity, version, time, persisted_version, persisted_time)
+      instance.configure
+      instance
+    end
 
-      responses = [entity]
-
-      includes = Array(includes)
-
-      includes.each do |attribute|
-        value = public_send attribute
-
-        if value.nil? && attribute == :version
-          value = NoStream.version
-        end
-
-        responses << value
-      end
-
-      responses
+    def self.destructure(instance, includes=nil)
+      Destructure.(instance, includes)
     end
 
     def age_milliseconds
-      Clock::UTC.elapsed_milliseconds(time, Clock::UTC.now)
+      Clock::UTC.elapsed_milliseconds(time, clock.now)
     end
 
-    module NoStream
-      def self.destructure(includes=nil)
-        record = Record.new
-        record.destructure(includes)
+    def persisted_age_milliseconds
+      if persisted_time.nil?
+        nil
+      else
+        Clock::UTC.elapsed_milliseconds(
+          persisted_time,
+          time
+        )
       end
+    end
 
-      def self.version
-        :no_stream
+    def persisted_age_versions
+      if persisted_version.nil?
+        nil
+      else
+        version - persisted_version
       end
     end
   end

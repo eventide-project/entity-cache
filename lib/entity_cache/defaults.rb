@@ -1,7 +1,7 @@
 class EntityCache
   module Defaults
-    def self.persistent_store
-      Storage::Persistent::None
+    def self.persist_interval
+      Float::INFINITY
     end
   end
 end
