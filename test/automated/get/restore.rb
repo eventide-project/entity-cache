@@ -1,14 +1,14 @@
 require_relative '../automated_init'
 
 context "Get" do
-  context "Restore From Persistent Store" do
+  context "Restore From External Store" do
     id = Controls::ID.example
     entity = Controls::Entity.example
     persisted_version = Controls::Record.persisted_version
     persisted_time = Controls::Record.persisted_time
 
     entity_cache = EntityCache.new
-    entity_cache.persistent_store.add(
+    entity_cache.external_store.add(
       id,
       entity,
       persisted_version,
@@ -47,11 +47,11 @@ context "Get" do
       end
     end
 
-    context "Temporary Store" do
-      temporary_store = entity_cache.temporary_store
+    context "Internal Store" do
+      internal_store = entity_cache.internal_store
 
       test "Record is added" do
-        assert(temporary_store.put?(record))
+        assert(internal_store.put?(record))
       end
     end
   end

@@ -10,7 +10,7 @@ context "Get" do
     persisted_time = Controls::Record.persisted_time
 
     entity_cache = EntityCache.new
-    entity_cache.temporary_store.add(
+    entity_cache.internal_store.add(
       id,
       entity,
       version,

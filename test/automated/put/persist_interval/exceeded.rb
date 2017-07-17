@@ -17,8 +17,8 @@ context "Put" do
 
         entity_cache.put(id, entity, version, time: time)
 
-        test "Persistent store is updated" do
-          assert(entity_cache.persistent_store.put?)
+        test "External store is updated" do
+          assert(entity_cache.external_store.put?)
         end
       end
 
@@ -37,8 +37,8 @@ context "Put" do
           persisted_version: previous_persisted_version
         )
 
-        test "Persistent store is updated" do
-          assert(entity_cache.persistent_store.put?)
+        test "External store is updated" do
+          assert(entity_cache.external_store.put?)
         end
       end
     end

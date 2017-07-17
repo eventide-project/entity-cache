@@ -13,9 +13,9 @@ require 'entity_cache/controls/version'
 
 require 'entity_cache/controls/persist_interval'
 
-require 'entity_cache/controls/storage/persistent'
-require 'entity_cache/controls/storage/persistent/example'
-require 'entity_cache/controls/storage/persistent/not_implemented'
-require 'entity_cache/controls/storage/persistent/write'
+require 'entity_cache/controls/store/external'
+require 'entity_cache/controls/store/external/example'
+require 'entity_cache/controls/store/external/not_implemented'
+require 'entity_cache/controls/store/external/write'
 
-require 'entity_cache/controls/storage/temporary'
+require 'entity_cache/controls/store/internal'

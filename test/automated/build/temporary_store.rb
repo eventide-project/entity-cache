@@ -1,7 +1,7 @@
 require_relative '../automated_init'
 
 context "Build" do
-  context "Temporary Store" do
+  context "Internal Store" do
     subject = Controls::Subject.example
 
     context "No Scope" do
@@ -9,16 +9,16 @@ context "Build" do
         EntityCache.build(subject)
       end
 
-      temporary_store = entity_cache.temporary_store
+      internal_store = entity_cache.internal_store
 
       test "Default scope is selected" do
-        scope_class = EntityCache::Store::Temporary::Build.default_scope_class
+        scope_class = EntityCache::Store::Internal::Build.default_scope_class
 
-        assert(temporary_store.instance_of?(scope_class))
+        assert(internal_store.instance_of?(scope_class))
       end
 
       test "Subject" do
-        assert(temporary_store.subject == subject)
+        assert(internal_store.subject == subject)
       end
     end
 
@@ -27,16 +27,16 @@ context "Build" do
         EntityCache.build(subject, scope: :exclusive)
       end
 
-      temporary_store = entity_cache.temporary_store
+      internal_store = entity_cache.internal_store
 
       test "Specified scope is chosen" do
-        scope_class = EntityCache::Store::Temporary::Scope::Exclusive
+        scope_class = EntityCache::Store::Internal::Scope::Exclusive
 
-        assert(temporary_store.instance_of?(scope_class))
+        assert(internal_store.instance_of?(scope_class))
       end
 
       test "Subject" do
-        assert(temporary_store.subject == subject)
+        assert(internal_store.subject == subject)
       end
     end
   end

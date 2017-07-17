@@ -11,11 +11,11 @@ context "Put" do
 
   entity_cache.put(id, entity, version)
 
-  test "Record is put in temporary store" do
+  test "Record is put in internal store" do
     record = Controls::Record.example(persisted: false)
 
-    temporary_store = entity_cache.temporary_store
+    internal_store = entity_cache.internal_store
 
-    assert(temporary_store.put?(record))
+    assert(internal_store.put?(record))
   end
 end
