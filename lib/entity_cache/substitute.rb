@@ -24,7 +24,7 @@ class EntityCache
           persisted_time: persisted_time
         )
 
-        temporary_store.put(record)
+        internal_store.put(record)
       end
 
       def put(id, entity, version, time: nil, persisted_version: nil, persisted_time: nil)
