@@ -5,7 +5,9 @@ context "Internal Store" do
     subject = Controls::Subject.example
 
     context "Default" do
-      internal_store = EntityCache::Store::Internal::Build.(subject)
+      internal_store = Fixtures::Environment.() do
+        EntityCache::Store::Internal::Build.(subject)
+      end
 
       test "Thread" do
         assert(internal_store.instance_of?(EntityCache::Store::Internal::Scope::Thread))
