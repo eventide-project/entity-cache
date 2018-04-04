@@ -9,12 +9,14 @@ context "Build" do
         EntityCache.build(subject)
       end
 
+      default_scope_class = Fixtures::Environment.() do
+        EntityCache::Store::Internal::Build.default_scope_class
+      end
+
       internal_store = entity_cache.internal_store
 
       test "Default scope is selected" do
-        scope_class = EntityCache::Store::Internal::Build.default_scope_class
-
-        assert(internal_store.instance_of?(scope_class))
+        assert(internal_store.instance_of?(default_scope_class))
       end
 
       test "Subject" do
