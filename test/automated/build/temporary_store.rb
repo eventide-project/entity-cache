@@ -5,12 +5,14 @@ context "Build" do
     subject = Controls::Subject.example
 
     context "No Scope" do
-      entity_cache = Fixtures::Environment.() do
-        EntityCache.build(subject)
-      end
+      entity_cache = nil
 
-      default_scope_class = Fixtures::Environment.() do
-        EntityCache::Store::Internal::Build.default_scope_class
+      default_scope_class = nil
+
+      Fixtures::Environment.() do
+        entity_cache = EntityCache.build(subject)
+
+        default_scope_class = EntityCache::Store::Internal::Build.default_scope_class
       end
 
       internal_store = entity_cache.internal_store
