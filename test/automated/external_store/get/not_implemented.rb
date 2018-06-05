@@ -9,7 +9,7 @@ context "External Store" do
 
       test "Error is raised" do
         assert proc { external_store.get(id) } do
-          raises_error?(Virtual::PureMethodError)
+          raises_error?(Virtual::PureMethod::Error)
         end
       end
     end

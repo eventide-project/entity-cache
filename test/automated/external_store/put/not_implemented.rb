@@ -12,7 +12,7 @@ context "External Store" do
 
       test "Error is raised" do
         assert proc { external_store.put(id, entity, version, time) } do
-          raises_error?(Virtual::PureMethodError)
+          raises_error?(Virtual::PureMethod::Error)
         end
       end
     end
