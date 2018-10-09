@@ -1,6 +1,8 @@
 class EntityCache
   module Store
     class Internal
+      Virtual.activate(self)
+
       include Log::Dependency
 
       attr_accessor :subject

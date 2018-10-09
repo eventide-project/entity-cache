@@ -6,6 +6,7 @@ class EntityCache
           ::Configure.activate(self)
           Dependency.activate(self)
           Initializer.activate(self)
+          Virtual.activate(self)
 
           include Log::Dependency
 
