@@ -1,5 +1,6 @@
 class EntityCache
   Configure.activate(self)
+  Dependency.activate(self)
 
   include Log::Dependency
 

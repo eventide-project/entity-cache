@@ -9,6 +9,8 @@ class EntityCache
   )
 
   class Record
+    Dependency.activate(self)
+
     dependency :clock, Clock::UTC
 
     def configure
