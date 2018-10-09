@@ -5,6 +5,7 @@ class EntityCache
         cls.class_exec do
           ::Configure.activate(self)
           Dependency.activate(self)
+          Initializer.activate(self)
 
           include Log::Dependency
 
