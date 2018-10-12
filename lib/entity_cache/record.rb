@@ -9,7 +9,7 @@ class EntityCache
   )
 
   class Record
-    Dependency.activate(self)
+    include Dependency
 
     dependency :clock, Clock::UTC
 

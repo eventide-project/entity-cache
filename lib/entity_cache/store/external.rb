@@ -3,11 +3,10 @@ class EntityCache
     module External
       def self.included(cls)
         cls.class_exec do
-          ::Configure.activate(self)
-          Dependency.activate(self)
-          Initializer.activate(self)
-          Virtual.activate(self)
-
+          include ::Configure
+          include Dependency
+          include Initializer
+          include Virtual
           include Log::Dependency
 
           extend Build
