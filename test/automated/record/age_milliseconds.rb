@@ -2,16 +2,15 @@ require_relative '../automated_init'
 
 context "Record" do
   context "Age In Milliseconds" do
-    time = Controls::Time::Offset::Raw.example(1)
-    current_time = Controls::Time::Offset::Raw.example(11)
+    time = Time.now - 0.001
 
     record = Controls::Record.example(time: time)
-    record.clock.now = current_time
 
     age = record.age_milliseconds
 
     test "Is difference between cache record time and current time" do
-      assert(record.age_milliseconds == 10)
+      comment 'This test is subject to timing'
+      assert(age > 0)
     end
   end
 end
