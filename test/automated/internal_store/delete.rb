@@ -21,7 +21,7 @@ context "Internal Store" do
         assert(internal_store.count == record_count - 1)
       end
 
-      test "Returns cache recorded" do
+      test "Returns cache record" do
         assert(deleted_record == record)
       end
     end
@@ -39,7 +39,7 @@ context "Internal Store" do
         assert(internal_store.count == record_count)
       end
 
-      test "Returns Nil" do
+      test "Returns nil" do
         assert(record.nil?)
       end
     end
