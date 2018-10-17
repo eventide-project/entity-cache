@@ -43,6 +43,19 @@ class EntityCache
 
         record
       end
+
+      def delete(id)
+        records.delete(id)
+      end
+
+      def count
+        records.count
+      end
+      alias :length :count
+
+      def empty?
+        records.empty?
+      end
     end
   end
 end
