@@ -34,6 +34,9 @@ class EntityCache
           def path(id)
             External.path(subject, id)
           end
+
+          def self.assure(interval)
+          end
         end
 
         def self.path(subject, id=nil)

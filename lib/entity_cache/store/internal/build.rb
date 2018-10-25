@@ -41,7 +41,7 @@ class EntityCache
           @logger ||= Log.get(self)
         end
 
-        ScopeError = Class.new(StandardError)
+        ScopeError = Class.new(RuntimeError)
       end
     end
   end

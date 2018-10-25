@@ -1,6 +1,8 @@
 class EntityCache
   module Store
     module External
+      Error = Class.new(RuntimeError)
+
       def self.included(cls)
         cls.class_exec do
           include ::Configure
