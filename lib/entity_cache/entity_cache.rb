@@ -114,10 +114,10 @@ class EntityCache
     record
   end
 
-  def persist?(version, persisted_version)
-    persisted_version ||= -1
+  def persist?(version, last_persisted_version)
+    last_persisted_version ||= -1
 
-    difference = version - persisted_version
+    difference = version - last_persisted_version
 
     difference >= persist_interval
   end
