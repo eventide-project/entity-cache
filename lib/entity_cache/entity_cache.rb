@@ -117,8 +117,8 @@ class EntityCache
   def persist?(version, persisted_version)
     persisted_version ||= -1
 
-    age_versions = version - persisted_version
+    age_version = version - persisted_version
 
-    age_versions >= persist_interval
+    age_version >= persist_interval
   end
 end
