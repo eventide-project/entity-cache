@@ -54,7 +54,7 @@ class EntityCache
     if record.nil?
       logger.info(tags: [:get, :miss]) { "Cache miss getting entity (ID: #{id.inspect}, #{Record::LogText.get(record)})" }
     else
-      logger.info(tag: [:get, :hit]) { "Get entity done (ID: #{id.inspect}, #{Record::LogText.get(record)})" }
+      logger.info(tags: [:get, :hit]) { "Get entity done (ID: #{id.inspect}, #{Record::LogText.get(record)})" }
     end
 
     record
