@@ -43,7 +43,7 @@ class EntityCache
   end
 
   def get(id)
-    logger.trace(tag: :cache) { "Get entity (ID: #{id.inspect})" }
+    logger.trace(tag: :get) { "Get entity (ID: #{id.inspect})" }
 
     record = internal_store.get(id)
 
@@ -52,9 +52,9 @@ class EntityCache
     end
 
     if record.nil?
-      logger.info(tag: :cache) { "Cache miss getting entity (ID: #{id.inspect}, #{Record::LogText.get(record)})" }
+      logger.info(tags: [:get, :miss]) { "Cache miss getting entity (ID: #{id.inspect}, #{Record::LogText.get(record)})" }
     else
-      logger.info(tag: :cache) { "Get entity done (ID: #{id.inspect}, #{Record::LogText.get(record)})" }
+      logger.info(tag: [:get, :hit]) { "Get entity done (ID: #{id.inspect}, #{Record::LogText.get(record)})" }
     end
 
     record
@@ -67,7 +67,7 @@ class EntityCache
 
     record = Record.build(id, entity, version, time)
 
-    logger.trace(tag: :cache) { "Put entity (ID: #{id.inspect}, #{Record::LogText.get(record)}, Persist Interval: #{persist_interval.inspect})" }
+    logger.trace(tag: :put) { "Put entity (ID: #{id.inspect}, #{Record::LogText.get(record)}, Persist Interval: #{persist_interval.inspect})" }
 
     if persist?(version, persisted_version)
       external_store.put(id, entity, version, time)
@@ -82,18 +82,18 @@ class EntityCache
 
     internal_store.put(record)
 
-    logger.info(tag: :cache) { "Put entity done (ID: #{id.inspect}, #{Record::LogText.get(record)}, Persist Interval: #{persist_interval.inspect}, Updated External Store: #{updated_external_store})" }
+    logger.info(tag: :put) { "Put entity done (ID: #{id.inspect}, #{Record::LogText.get(record)}, Persist Interval: #{persist_interval.inspect}, Updated External Store: #{updated_external_store})" }
 
     record
   end
 
   def restore(id)
-    logger.trace(tag: :cache) { "Restoring entity (ID: #{id.inspect})" }
+    logger.trace(tag: :restore) { "Restoring entity (ID: #{id.inspect})" }
 
     entity, version, time = external_store.get(id)
 
     if entity.nil?
-      logger.debug(tag: :cache) { "Could not restore entity. No entity record. (ID: #{id.inspect})" }
+      logger.debug(tag: :restore) { "Could not restore entity. No entity record. (ID: #{id.inspect})" }
 
       return nil
     end
@@ -109,7 +109,7 @@ class EntityCache
 
     internal_store.put(record)
 
-    logger.debug(tag: :cache) { "Restored entity (ID: #{id.inspect}, #{Record::LogText.get(record)})" }
+    logger.debug(tag: :restore) { "Restored entity (ID: #{id.inspect}, #{Record::LogText.get(record)})" }
 
     record
   end
