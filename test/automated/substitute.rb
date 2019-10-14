@@ -29,9 +29,7 @@ context "Substitute" do
 
     context "Nothing Is Put" do
       test "Predicate returns false" do
-        refute(substitute) do
-          put?
-        end
+        refute(substitute.put?)
       end
     end
 
@@ -51,12 +49,34 @@ context "Substitute" do
         assert(record.nil?)
       end
 
-      test "Predicate returns true" do
-        assert(substitute.put?)
+      context "Predicate" do
+        context "No Block Argument" do
+          test do
+            assert(substitute.put?)
+          end
+        end
 
-        assert(substitute) do
-          put? do |record|
-            record == control_record
+        context "Block Argument" do
+          test "Record that was put is yielded to block" do
+            record = nil
+
+            substitute.put? do |r|
+              record = r
+            end
+
+            assert(record == control_record)
+          end
+
+          context "Block Returns True" do
+            test do
+              assert(substitute.put? { true })
+            end
+          end
+
+          context "Block Returns False" do
+            test do
+              refute(substitute.put? { false })
+            end
           end
         end
       end

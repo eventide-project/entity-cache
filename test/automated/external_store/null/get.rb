@@ -11,11 +11,11 @@ context "External Store" do
 
       entity, version, time = nil, nil, nil
 
-      get_proc = proc { entity, version, time = external_store.get(id) }
+      get_proc = proc {  }
 
       test "No error is raised" do
-        refute get_proc do
-          raises_error?
+        refute_raises do
+          entity, version, time = external_store.get(id)
         end
       end
 

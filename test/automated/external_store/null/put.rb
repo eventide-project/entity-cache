@@ -13,8 +13,8 @@ context "External Store" do
       external_store = EntityCache::Store::External::Null.build(subject)
 
       test "No error is raised" do
-        refute proc { external_store.put(id, entity, version, time) } do
-          raises_error?
+        refute_raises do
+          external_store.put(id, entity, version, time)
         end
       end
     end

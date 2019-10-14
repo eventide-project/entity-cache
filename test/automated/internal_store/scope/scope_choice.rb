@@ -76,8 +76,8 @@ context "Internal Store" do
 
     context "Unknown" do
       test "Raises error" do
-        assert proc { EntityCache::Store::Internal::Build.(subject, scope: :unknown) } do
-          raises_error?(EntityCache::Store::Internal::Build::ScopeError)
+        assert_raises EntityCache::Store::Internal::Build::ScopeError do
+          EntityCache::Store::Internal::Build.(subject, scope: :unknown)
         end
       end
     end

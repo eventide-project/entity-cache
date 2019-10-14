@@ -11,8 +11,8 @@ context "External Store" do
       time = Controls::Record.time
 
       test "Error is raised" do
-        assert proc { external_store.put(id, entity, version, time) } do
-          raises_error?(Virtual::PureMethod::Error)
+        assert_raises Virtual::PureMethod::Error do
+          external_store.put(id, entity, version, time)
         end
       end
     end
