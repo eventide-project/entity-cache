@@ -8,7 +8,7 @@ context "External Store" do
       id = Controls::ID.example
 
       test "Error is raised" do
-        assert_raises Virtual::PureMethod::Error do
+        assert_raises(Virtual::PureMethod::Error) do
           external_store.get(id)
         end
       end

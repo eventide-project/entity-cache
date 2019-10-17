@@ -76,7 +76,7 @@ context "Internal Store" do
 
     context "Unknown" do
       test "Raises error" do
-        assert_raises EntityCache::Store::Internal::Build::ScopeError do
+        assert_raises(EntityCache::Store::Internal::Build::ScopeError) do
           EntityCache::Store::Internal::Build.(subject, scope: :unknown)
         end
       end
