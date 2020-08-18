@@ -3,15 +3,27 @@ module Fixtures
     def self.call(env=nil, &block)
       env ||= {}
 
-      old_env = ENV.to_h
+      if RUBY_ENGINE == 'mruby'
+        old_env = ENV.to_hash
+      else
+        old_env = ENV.to_h
+      end
 
       begin
-        ENV.replace(env)
+        replace_env(env)
 
         block.()
 
       ensure
-        ENV.replace(old_env)
+        replace_env(old_env)
+      end
+    end
+
+    def self.replace_env(env)
+      ENV.clear
+
+      env.each do |key, value|
+        ENV[key] = value
       end
     end
   end
