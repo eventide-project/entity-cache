@@ -34,7 +34,7 @@ class EntityCache
         def configure(session: nil)
           ::Telemetry.configure(self)
 
-          super
+          super(session: session)
         end
       end
 
