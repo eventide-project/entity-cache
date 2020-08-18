@@ -28,7 +28,9 @@ class EntityCache
 
             text = YAML.dump([entity, version, time])
 
-            File.write(path, text)
+            File.open(path, 'w') do |io|
+              io.write(text)
+            end
           end
 
           def path(id)

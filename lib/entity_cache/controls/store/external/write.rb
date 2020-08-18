@@ -14,7 +14,9 @@ class EntityCache
 
             path = External.path(subject)
 
-            File.write(path, text)
+            File.open(path, 'w') do |io|
+              io.write(text)
+            end
 
             return subject
           end
