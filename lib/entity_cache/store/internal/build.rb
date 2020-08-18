@@ -18,7 +18,7 @@ class EntityCache
           scopes.fetch(scope) do
             *scopes, final_scope = self.scopes.keys
 
-            scope_list = "#{scopes.map(&:inspect) * ', '} or #{final_scope.inspect}"
+            scope_list = "#{scopes.map(&:inspect).join(', ')} or #{final_scope.inspect}"
 
             error_message = %{Scope #{scope.inspect} is unknown. It must be one of: #{scope_list}}
 
