@@ -18,7 +18,9 @@ class EntityCache
 
             text = File.read(path)
 
-            entity, version, time = YAML.load(text)
+            entity, version, time_iso8601 = YAML.load(text)
+
+            time = Clock.parse(time_iso8601)
 
             return entity, version, time
           end
@@ -26,7 +28,9 @@ class EntityCache
           def put(id, entity, version, time)
             path = path(id)
 
-            text = YAML.dump([entity, version, time])
+            time_iso8601 = Clock.iso8601(time)
+
+            text = YAML.dump([entity, version, time_iso8601])
 
             File.open(path, 'w') do |io|
               io.write(text)
