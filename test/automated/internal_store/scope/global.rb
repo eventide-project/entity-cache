@@ -49,22 +49,26 @@ context "Internal Store" do
         end
       end
 
-      context "Within Another Thread" do
-        record = nil
+      if RUBY_ENGINE == 'mruby'
+        _context "Within Another Thread (Cannot Be Tested Under MRuby)"
+      else
+        context "Within Another Thread" do
+          record = nil
 
-        thread = Thread.new do
-          other_store = EntityCache::Store::Internal::Scope::Global.build(subject)
+          thread = Thread.new do
+            other_store = EntityCache::Store::Internal::Scope::Global.build(subject)
 
-          record = other_store.get(put_record.id)
-        end
-        thread.join
+            record = other_store.get(put_record.id)
+          end
+          thread.join
 
-        test "Returns copy of record" do
-          assert(Transform::Copy.copied?(record, put_record))
-        end
+          test "Returns copy of record" do
+            assert(Transform::Copy.copied?(record, put_record))
+          end
 
-        test "Entity is copied" do
-          assert(Transform::Copy.copied?(record.entity, put_record.entity))
+          test "Entity is copied" do
+            assert(Transform::Copy.copied?(record.entity, put_record.entity))
+          end
         end
       end
     end
