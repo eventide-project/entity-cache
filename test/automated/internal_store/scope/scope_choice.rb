@@ -9,8 +9,14 @@ context "Internal Store" do
         EntityCache::Store::Internal::Build.(subject)
       end
 
-      test "Thread" do
-        assert(internal_store.instance_of?(EntityCache::Store::Internal::Scope::Thread))
+      if not RUBY_ENGINE == 'mruby'
+        test "Thread" do
+          assert(internal_store.instance_of?(EntityCache::Store::Internal::Scope::Thread))
+        end
+      else
+        test "Exclusive" do
+          assert(internal_store.instance_of?(EntityCache::Store::Internal::Scope::Exclusive))
+        end
       end
     end
 

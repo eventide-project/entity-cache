@@ -18,7 +18,11 @@ class EntityCache
             end
 
             def self.default
-              'thread'
+              if not RUBY_ENGINE == 'mruby'
+                'thread'
+              else
+                'exclusive'
+              end
             end
           end
         end
