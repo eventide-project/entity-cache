@@ -2,7 +2,7 @@ require_relative '../automated_init'
 
 context "Build" do
   context "Internal Store" do
-    subject = Controls::Subject.example
+    entity_class = Controls::Entity::Example
 
     context "No Scope" do
       entity_cache = nil
@@ -10,7 +10,7 @@ context "Build" do
       default_scope_class = nil
 
       Fixtures::Environment.() do
-        entity_cache = EntityCache.build(subject)
+        entity_cache = EntityCache.build(entity_class)
 
         default_scope_class = EntityCache::Store::Internal::Build.default_scope_class
       end
@@ -22,13 +22,13 @@ context "Build" do
       end
 
       test "Subject" do
-        assert(internal_store.subject == subject)
+        assert(internal_store.subject == entity_cache.subject)
       end
     end
 
     context "Scope" do
       entity_cache = Fixtures::Environment.() do
-        EntityCache.build(subject, scope: :exclusive)
+        EntityCache.build(entity_class, scope: :exclusive)
       end
 
       internal_store = entity_cache.internal_store
@@ -40,7 +40,7 @@ context "Build" do
       end
 
       test "Subject" do
-        assert(internal_store.subject == subject)
+        assert(internal_store.subject == entity_cache.subject)
       end
     end
   end

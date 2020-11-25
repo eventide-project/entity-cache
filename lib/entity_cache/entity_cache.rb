@@ -10,12 +10,29 @@ class EntityCache
     @persist_interval ||= Defaults.persist_interval
   end
 
+  attr_accessor :subject
+
+  def entity_class
+    subject.entity_class
+  end
+
+  def specifier
+    subject.specifier
+  end
+
   dependency :clock, Clock::UTC
   dependency :internal_store, Store::Internal
   dependency :external_store, Store::External
 
-  def self.build(subject, scope: nil, persist_interval: nil, external_store: nil, external_store_session: nil)
+  def self.build(entity_class, specifier: nil, scope: nil, persist_interval: nil, external_store: nil, external_store_session: nil)
+    subject = Subject.build({
+      :entity_class => entity_class,
+      :specifier => specifier
+    })
+
     instance = new
+
+    instance.subject = subject
 
     instance.configure(
       subject: subject,

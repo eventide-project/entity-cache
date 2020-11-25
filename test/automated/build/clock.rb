@@ -2,9 +2,9 @@ require_relative '../automated_init'
 
 context "Build" do
   context "Clock" do
-    subject = Controls::Subject.example
+    entity_class = Controls::Entity::Example
 
-    entity_cache = EntityCache.build(subject)
+    entity_cache = EntityCache.build(entity_class)
 
     clock = entity_cache.clock
 
