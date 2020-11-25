@@ -11,6 +11,8 @@ require 'entity_cache/controls/subject'
 require 'entity_cache/controls/time'
 require 'entity_cache/controls/version'
 
+require 'entity_cache/controls/specifier'
+
 require 'entity_cache/controls/persist_interval'
 
 require 'entity_cache/controls/store/external'

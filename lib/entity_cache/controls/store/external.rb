@@ -3,7 +3,7 @@ class EntityCache
     module Store
       module External
         def self.example(subject=nil)
-          subject ||= Subject.example
+          subject ||= Subject.example(random: true)
 
           Example.build(subject)
         end

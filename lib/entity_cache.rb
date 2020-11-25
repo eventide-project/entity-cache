@@ -7,6 +7,8 @@ require 'entity_cache/log'
 
 require 'entity_cache/defaults'
 
+require 'entity_cache/subject'
+
 require 'entity_cache/record'
 require 'entity_cache/record/destructure'
 require 'entity_cache/record/log_text'
