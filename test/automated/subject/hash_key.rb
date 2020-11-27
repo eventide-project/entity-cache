@@ -7,13 +7,13 @@ context "Subject" do
 
       subject = Controls::Subject.example(specifier: specifier)
 
-      control_key = Controls::Subject::Key.example(specifier: specifier)
+      control_key = Controls::Subject::HashKey.example(specifier: specifier)
 
-      key = subject.key
+      key = subject.hash_key
 
       test do
-        comment "Control key: #{control_key.inspect}"
-        detail "Compare key: #{key.inspect}"
+        comment key.inspect
+        detail "Control key: #{control_key.inspect}"
 
         assert(key == control_key)
       end
@@ -22,13 +22,13 @@ context "Subject" do
     context "No Specifier" do
       subject = Controls::Subject.example(specifier: :none)
 
-      control_key = Controls::Subject::Key.example(specifier: :none)
+      control_key = Controls::Subject::HashKey.example(specifier: :none)
 
-      key = subject.key
+      key = subject.hash_key
 
       test do
-        comment "Control key: #{control_key.inspect}"
-        detail "Compare key: #{key.inspect}"
+        comment key.inspect
+        detail "Control key: #{control_key.inspect}"
 
         assert(key == control_key)
       end

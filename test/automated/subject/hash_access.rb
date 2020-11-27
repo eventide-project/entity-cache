@@ -7,24 +7,30 @@ context "Subject" do
     subject_1 = Controls::Subject.example(specifier: specifier)
     subject_2 = Controls::Subject.example(specifier: specifier)
 
-    assert(subject_1 == subject_2)
+    assert(subject_1.to_h == subject_2.to_h)
     refute(subject_1.equal?(subject_2))
 
-    context "Hash Is Assigned Different Values For Two Equivalent Subjects" do
+    context "Hash Is Assigned Different Values for the Same Subject Keys" do
       hash = {}
 
-      control_value = 'other data'
+      override_value = 'override data'
 
-      hash[subject_1] = 'some data'
-      hash[subject_2] = control_value
+      hash[subject_1] = 'original data'
+      hash[subject_2] = override_value
 
       value = hash[subject_1]
 
-      test "Second assignment overrides the first" do
-        comment "Control value: #{control_value.inspect}"
-        detail "Compare value: #{value.inspect}"
+      test "Both values are written to the same key" do
+        comment "Value: #{value.inspect}"
+        detail "Override Value: #{override_value.inspect}"
 
-        assert(value == control_value)
+        assert(value == override_value)
+      end
+    end
+
+    context "Hash Is Assigned Different Values for Different Subject Keys" do
+      test "Values are written to different keys" do
+        refute(true)
       end
     end
   end

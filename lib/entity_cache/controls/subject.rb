@@ -24,10 +24,10 @@ class EntityCache
         Specifier.example
       end
 
-      module Key
+      module HashKey
         def self.example(**args)
           subject = Subject.example(**args)
-          subject.key
+          subject.hash_key
         end
       end
     end

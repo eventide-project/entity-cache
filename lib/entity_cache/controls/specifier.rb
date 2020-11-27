@@ -2,7 +2,7 @@ class EntityCache
   module Controls
     module Specifier
       def self.example(specifier: nil, random: nil)
-        specifier ||= 'someSpecifier'
+        specifier ||= 'SomeSpecifier'
         random ||= false
 
         if random

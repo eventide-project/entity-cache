@@ -8,7 +8,6 @@ class EntityCache
     def hash_key
       self.class.hash_key(entity_class, specifier)
     end
-    alias_method :key, :hash_key
     alias_method :to_s, :hash_key
 
     def hash
@@ -19,8 +18,12 @@ class EntityCache
       if specifier.nil?
         "#{entity_class}"
       else
-        "#{entity_class}-#{specifier}"
+        "#{entity_class}#{hash_key_separator}#{specifier}"
       end
+    end
+
+    def self.hash_key_separator
+      '/'
     end
   end
 end
