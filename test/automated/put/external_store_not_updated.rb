@@ -10,7 +10,7 @@ context "Put" do
     id = Controls::Record.id
     entity = Controls::Record.entity
 
-    entity_cache = EntityCache.new
+    entity_cache = Controls::EntityCache.example
     entity_cache.clock.now = Controls::Record.persisted_time
     entity_cache.persist_interval = persist_interval
 

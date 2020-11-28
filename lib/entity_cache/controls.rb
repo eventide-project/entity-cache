@@ -21,3 +21,5 @@ require 'entity_cache/controls/store/external/not_implemented'
 require 'entity_cache/controls/store/external/write'
 
 require 'entity_cache/controls/store/internal'
+
+require 'entity_cache/controls/entity_cache'

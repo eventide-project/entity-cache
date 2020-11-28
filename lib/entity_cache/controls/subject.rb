@@ -10,7 +10,7 @@ class EntityCache
           specifier = Specifier.example(specifier: specifier, random: random)
         end
 
-        EntityCache::Subject.build({
+        ::EntityCache::Subject.build({
           :entity_class => entity_class,
           :specifier => specifier
         })

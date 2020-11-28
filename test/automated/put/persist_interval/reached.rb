@@ -12,7 +12,7 @@ context "Put" do
       context "Previous Persisted Version Not Specified" do
         version = 10
 
-        entity_cache = EntityCache.new
+        entity_cache = Controls::EntityCache.example
         entity_cache.persist_interval = persist_interval
 
         entity_cache.put(id, entity, version, time: time)
@@ -26,7 +26,7 @@ context "Put" do
         previous_persisted_version = 0
         version = 11
 
-        entity_cache = EntityCache.new
+        entity_cache = Controls::EntityCache.example
         entity_cache.persist_interval = persist_interval
 
         entity_cache.put(
