@@ -6,7 +6,7 @@ context "Put" do
   version = Controls::Record.version
   time = Controls::Record.time
 
-  entity_cache = EntityCache.new
+  entity_cache = Controls::EntityCache.example
   entity_cache.clock.now = time
 
   entity_cache.put(id, entity, version)

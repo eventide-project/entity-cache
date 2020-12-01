@@ -39,7 +39,9 @@ class EntityCache
         def self.path(subject, id=nil)
           id ||= ID.example
 
-          File.join(tmpdir, "#{subject}-#{id}.yaml")
+          filename = "#{subject.to_s.gsub('/', '-')}-#{id}.yaml"
+
+          File.join(tmpdir, filename)
         end
 
         def self.tmpdir

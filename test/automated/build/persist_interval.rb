@@ -2,10 +2,10 @@ require_relative '../automated_init'
 
 context "Build" do
   context "Persist Interval" do
-    context "Default" do
-      subject = Controls::Subject.example
+    entity_class = Controls::Entity::Example
 
-      entity_cache = EntityCache.build(subject)
+    context "Default" do
+      entity_cache = EntityCache.build(entity_class)
 
       test "Infinite" do
         assert(entity_cache.persist_interval == Float::INFINITY)
@@ -15,9 +15,7 @@ context "Build" do
     context "Specified" do
       persist_interval = Controls::PersistInterval.example
 
-      subject = Controls::Subject.example
-
-      entity_cache = EntityCache.build(subject, persist_interval: persist_interval)
+      entity_cache = EntityCache.build(entity_class, persist_interval: persist_interval)
 
       test do
         assert(entity_cache.persist_interval == persist_interval)

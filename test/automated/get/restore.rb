@@ -7,7 +7,7 @@ context "Get" do
     persisted_version = Controls::Record.persisted_version
     persisted_time = Controls::Record.persisted_time
 
-    entity_cache = EntityCache.new
+    entity_cache = Controls::EntityCache.example
     entity_cache.external_store.add(
       id,
       entity,

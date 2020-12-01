@@ -2,7 +2,7 @@ require_relative '../../automated_init'
 
 context "Internal Store" do
   context "Thread Scope" do
-    subject = Controls::Subject.example
+    subject = Controls::Subject.example(random: true)
 
     put_record = Controls::Record.example
 
@@ -38,7 +38,7 @@ context "Internal Store" do
       end
 
       context "Subjects Do Not Match" do
-        other_subject = Controls::Subject.example
+        other_subject = Controls::Subject.example(random: true)
 
         other_store = EntityCache::Store::Internal::Scope::Thread.build(other_subject)
 

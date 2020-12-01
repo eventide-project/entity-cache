@@ -2,10 +2,10 @@ require_relative '../automated_init'
 
 context "Build" do
   context "External Store Implementation" do
-    subject = Controls::Subject.example
+    entity_class = Controls::Entity::Example
 
     context "Not Specified" do
-      entity_cache = EntityCache.build(subject)
+      entity_cache = EntityCache.build(entity_class)
 
       external_store = entity_cache.external_store
 
@@ -14,6 +14,10 @@ context "Build" do
 
         assert(external_store.instance_of?(null_store_class))
       end
+
+      test "Subject" do
+        assert(external_store.subject == entity_cache.subject)
+      end
     end
 
     context "Specified" do
@@ -21,7 +25,7 @@ context "Build" do
 
       context "Session Omitted" do
         entity_cache = EntityCache.build(
-          subject,
+          entity_class,
           external_store: external_store_class
         )
 
@@ -36,7 +40,7 @@ context "Build" do
         session = Object.new
 
         entity_cache = EntityCache.build(
-          subject,
+          entity_class,
           external_store: external_store_class,
           external_store_session: session
         )

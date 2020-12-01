@@ -4,7 +4,7 @@ context "Get" do
   context "Miss" do
     id = Controls::ID.example
 
-    entity_cache = EntityCache.new
+    entity_cache = Controls::EntityCache.example
 
     record = entity_cache.get(id)
 

@@ -1,6 +1,7 @@
 class EntityCache
   include Configure
   include Dependency
+  include Initializer
   include Log::Dependency
 
   configure :entity_cache
@@ -10,12 +11,27 @@ class EntityCache
     @persist_interval ||= Defaults.persist_interval
   end
 
+  def entity_class
+    subject.entity_class
+  end
+
+  def specifier
+    subject.specifier
+  end
+
   dependency :clock, Clock::UTC
   dependency :internal_store, Store::Internal
   dependency :external_store, Store::External
 
-  def self.build(subject, scope: nil, persist_interval: nil, external_store: nil, external_store_session: nil)
-    instance = new
+  initializer :subject
+
+  def self.build(entity_class, specifier=nil, scope: nil, persist_interval: nil, external_store: nil, external_store_session: nil)
+    subject = Subject.build({
+      :entity_class => entity_class,
+      :specifier => specifier
+    })
+
+    instance = new(subject)
 
     instance.configure(
       subject: subject,

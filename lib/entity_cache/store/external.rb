@@ -30,6 +30,14 @@ class EntityCache
         end
       end
 
+      def entity_class
+        subject.entity_class
+      end
+
+      def specifier
+        subject.specifier
+      end
+
       module Configure
         def configure(session: nil)
           ::Telemetry.configure(self)

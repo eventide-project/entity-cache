@@ -15,7 +15,7 @@ class EntityCache
           persisted_time ||= self.persisted_time
         end
 
-        EntityCache::Record.new(
+        ::EntityCache::Record.new(
           id,
           entity,
           version,

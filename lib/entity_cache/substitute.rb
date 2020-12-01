@@ -5,6 +5,9 @@ class EntityCache
     end
 
     class EntityCache < EntityCache
+      def initialize
+      end
+
       def self.build
         new
       end
