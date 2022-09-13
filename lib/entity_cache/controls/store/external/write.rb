@@ -6,15 +6,18 @@ class EntityCache
           def self.call
             subject = Subject.example
 
-            entity_data = Controls::Entity.example.to_h
+            entity = Controls::Entity.example
+            entity_data = Transform::Write.raw_data(entity)
 
             persisted_time_iso8601 = Controls::Record.persisted_time.iso8601(5)
 
-            text = YAML.dump([
+            data = [
               entity_data,
               Controls::Record.persisted_version,
               persisted_time_iso8601
-            ])
+            ]
+
+            text = JSON.generate(data)
 
             path = External.path(subject)
 

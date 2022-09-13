@@ -1,4 +1,4 @@
-require 'yaml'
+require 'json'
 require 'tmpdir'
 
 require 'clock/controls'

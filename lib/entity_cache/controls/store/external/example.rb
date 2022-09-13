@@ -18,13 +18,9 @@ class EntityCache
 
             text = File.read(path)
 
-            entity_data, version, time_iso8601 = YAML.load(text)
+            entity_data, version, time_iso8601 = JSON.parse(text, symbolize_names: true)
 
-            entity = Entity::Example.new(
-              entity_data[:id],
-              entity_data[:some_attr],
-              entity_data[:other_attr]
-            )
+            entity = Entity::Example.new(*entity_data)
 
             time = Clock.parse(time_iso8601)
 
@@ -34,11 +30,17 @@ class EntityCache
           def put(id, entity, version, time)
             path = path(id)
 
-            entity_data = entity.to_h
+            entity_data = Transform::Write.raw_data(entity)
 
             time_iso8601 = Clock.iso8601(time)
 
-            text = YAML.dump([entity_data, version, time_iso8601])
+            data = [
+              entity_data,
+              version,
+              time_iso8601
+            ]
+
+            text = JSON.generate(data)
 
             File.write(path, text)
           end
