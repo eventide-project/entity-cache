@@ -1,5 +1,5 @@
 require 'json'
-require 'tmpdir'
+require 'fileutils'
 
 require 'clock/controls'
 require 'identifier/uuid/controls'

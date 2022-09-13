@@ -42,6 +42,8 @@ class EntityCache
 
             text = JSON.generate(data)
 
+            FileUtils.mkdir_p(External.file_dump_directory)
+
             File.write(path, text)
           end
 
@@ -55,13 +57,13 @@ class EntityCache
 
           filename = "#{subject.to_s.gsub('/', '-')}-#{id}.yaml"
 
-          full_name = File.join(tmpdir, filename)
+          full_name = File.join(file_dump_directory, filename)
 
           full_name
         end
 
-        def self.tmpdir
-          @tmpdir ||= Dir.tmpdir
+        def self.file_dump_directory
+          "tmp"
         end
       end
     end
