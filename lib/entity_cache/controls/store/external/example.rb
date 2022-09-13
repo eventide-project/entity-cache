@@ -53,7 +53,9 @@ class EntityCache
 
           filename = "#{subject.to_s.gsub('/', '-')}-#{id}.yaml"
 
-          File.join(tmpdir, filename)
+          full_name = File.join(tmpdir, filename)
+
+          full_name
         end
 
         def self.tmpdir
