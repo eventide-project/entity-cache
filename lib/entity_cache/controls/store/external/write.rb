@@ -6,10 +6,14 @@ class EntityCache
           def self.call
             subject = Subject.example
 
+            entity_data = Controls::Entity.example.to_h
+
+            persisted_time_iso8601 = Controls::Record.persisted_time.iso8601(5)
+
             text = YAML.dump([
-              Controls::Entity.example,
+              entity_data,
               Controls::Record.persisted_version,
-              Controls::Record.persisted_time
+              persisted_time_iso8601
             ])
 
             path = External.path(subject)
