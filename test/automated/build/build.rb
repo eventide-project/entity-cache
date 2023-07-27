@@ -12,8 +12,8 @@ context "Build" do
   control_subject = Controls::Subject.example(specifier: specifier)
 
   test "Subject" do
-    detail subject
-    comment control_subject
+    comment subject.inspect
+    detail "Control: #{control_subject.inspect}"
 
     assert(subject == control_subject)
   end
